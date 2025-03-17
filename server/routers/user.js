@@ -1,11 +1,13 @@
-// routes/user.js
+const express = require("express");
+// import express from "express";
+const userRoute = express.Router();
 
-import express from "express";
-import { login, register } from "../controllers/user.js";
+const firebaseAuthController = require("../controllers/firebase-auth-controller");
+// import firebaseAuthController from "../controllers/firebase-auth-controller.js";
 
-const router = express.Router();
+userRoute.post("/api/register", firebaseAuthController.registerUser);
+userRoute.post("/api/login", firebaseAuthController.loginUser);
+userRoute.post("/api/logout", firebaseAuthController.logoutUser);
+userRoute.post("/api/reset-password", firebaseAuthController.resetPassword);
 
-router.post("/register", register);
-router.post("/login", login);
-
-export default router;
+module.exports = userRoute;

@@ -1,7 +1,5 @@
-// models/Customer.js
-
-import mongoose from "mongoose";
-
+// import mongoose from "mongoose";
+const mongoose = require("mongoose");
 const CustomerSchema = new mongoose.Schema(
   {
     name: { type: String, required: true },
@@ -19,4 +17,4 @@ const CustomerSchema = new mongoose.Schema(
   }
 );
 
-export default mongoose.model("Customer", CustomerSchema);
+module.exports = mongoose.model("Customer", CustomerSchema);

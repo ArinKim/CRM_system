@@ -1,18 +1,23 @@
-// routes/customer.js
-
-import express from "express";
-import {
+// import express from "express";
+const express = require("express");
+const {
   createCustomer,
   deleteCustomer,
   getCustomers,
   updateCustomer,
-} from "../controllers/customer.js";
+} = require("../controllers/customer.js");
+// import {
+//   createCustomer,
+//   deleteCustomer,
+//   getCustomers,
+//   updateCustomer,
+// } from "../controllers/customer.js";
 
-const router = express.Router();
+const customerRoute = express.Router();
 
-router.post("/", createCustomer);
-router.put("/:id", updateCustomer);
-router.delete("/:id", deleteCustomer);
-router.get("/:userId", getCustomers);
+customerRoute.post("/", createCustomer);
+customerRoute.put("/:id", updateCustomer);
+customerRoute.delete("/:id", deleteCustomer);
+customerRoute.get("/:userId", getCustomers);
 
-export default router;
+module.exports = customerRoute;

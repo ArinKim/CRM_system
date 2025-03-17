@@ -1,6 +1,4 @@
-// controllers/customer.js
-
-import Customer from "../models/Customer.js";
+import Customer from "../models/customers.js";
 
 export const createCustomer = async (req, res, next) => {
   const newCustomer = new Customer(req.body);

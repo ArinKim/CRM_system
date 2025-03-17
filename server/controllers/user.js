@@ -1,9 +1,27 @@
-// controllers/user.js
-
-import User from "../models/User.js";
+import User from "../models/user.js";
 import bcrypt from "bcryptjs";
 import { createError } from "../error.js";
 import jwt from "jsonwebtoken";
+
+import { db } from "../util/admin";
+
+export const getInformation = async (req, res, next) => {
+  const booksRef = db.collection("Books");
+  try {
+    booksRef.get().then((snapshot) => {
+      const data = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      console.log(data);
+      return res.status(201).json(data);
+    });
+  } catch (error) {
+    return res
+      .status(500)
+      .json({ general: "Something went wrong, please try again" });
+  }
+};
 
 export const register = async (req, res, next) => {
   try {

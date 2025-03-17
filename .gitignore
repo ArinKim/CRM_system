@@ -21,3 +21,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+server/crm-project-6fb6d-firebase-adminsdk-fbsvc-e8cb87855a.json
+.env
