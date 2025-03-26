@@ -1,12 +1,12 @@
-const express = require("express");
-const dotenv = require("dotenv");
-const mongoose = require("mongoose");
-const userRoute = require("./routers/user.js");
-const customerRoute = require("./routers/customer.js");
-const cors = require("cors");
-const helmet = require("helmet");
+import express from "express";
+import dotenv from "dotenv";
+import mongoose from "mongoose";
+import {userRoute} from "./routers/user";
+import {customerRoute} from "./routers/customer";
+import cors from "cors";
+import helmet from "helmet";
 const app = express();
-const session = require("express-session");
+import session from "express-session";
 
 dotenv.config();
 

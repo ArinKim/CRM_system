@@ -1,4 +1,4 @@
-const express = require("express");
+import express from "express";
 const userRoute = express.Router();
 
 const firebaseAuthController = require("../controllers/firebase-auth-controller");
@@ -35,4 +35,4 @@ userRoute.delete(
   userInfoController.deleteInformation
 );
 
-module.exports = userRoute;
+export {userRoute};

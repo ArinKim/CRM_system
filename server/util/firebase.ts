@@ -30,8 +30,7 @@ const firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig); //initialize firebase app
-
-module.exports = {
+export {
   firebase,
   getFirestore,
   getAuth,
