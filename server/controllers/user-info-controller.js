@@ -15,18 +15,15 @@ const {
 class userInfoController {
   async getAllInformation(req, res, next) {
     try {
-      const booksRef = db.collection("users");
+      const usersRef = db.collection("users");
 
-      booksRef.get().then((snapshot) => {
+      usersRef.get().then((snapshot) => {
         const data = snapshot.docs.map((doc) => ({
           uid: doc.uid,
           ...doc.data(),
         }));
-        console.log(data);
-        return res.status(201).json(
-          // data
-          { general: "Here!" }
-        );
+        // console.log(data);
+        return res.status(200).json(data);
       });
     } catch (error) {
       return res
@@ -37,19 +34,15 @@ class userInfoController {
 
   async getInformation(req, res, next) {
     try {
-      const booksRef = db.collection("Books");
+      const usersRef = db.collection("users").doc(req.params.uid);
+      const doc = await usersRef.get();
+      if (!doc.exists) {
+        console.log("No such document!");
+      } else {
+        console.log("Document data:", doc.data());
+      }
 
-      booksRef.get().then((snapshot) => {
-        const data = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        console.log(data);
-        return res.status(201).json(
-          // data
-          { general: "Here!" }
-        );
-      });
+      return res.status(200).json(doc.data());
     } catch (error) {
       return res
         .status(500)
@@ -85,21 +78,3 @@ class userInfoController {
 }
 
 module.exports = new userInfoController();
-
-// export const getInformation = async (req, res, next) => {
-//   const booksRef = db.collection("Books");
-//   try {
-//     booksRef.get().then((snapshot) => {
-//       const data = snapshot.docs.map((doc) => ({
-//         id: doc.id,
-//         ...doc.data(),
-//       }));
-//       console.log(data);
-//       return res.status(201).json(data);
-//     });
-//   } catch (error) {
-//     return res
-//       .status(500)
-//       .json({ general: "Something went wrong, please try again" });
-//   }
-// };
