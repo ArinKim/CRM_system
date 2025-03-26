@@ -13,6 +13,28 @@ const {
 } = require("../util/firebase.js");
 
 class userInfoController {
+  async getAllInformation(req, res, next) {
+    try {
+      const booksRef = db.collection("users");
+
+      booksRef.get().then((snapshot) => {
+        const data = snapshot.docs.map((doc) => ({
+          uid: doc.uid,
+          ...doc.data(),
+        }));
+        console.log(data);
+        return res.status(201).json(
+          // data
+          { general: "Here!" }
+        );
+      });
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ general: "Something went wrong, please try again" });
+    }
+  }
+
   async getInformation(req, res, next) {
     try {
       const booksRef = db.collection("Books");
@@ -23,7 +45,10 @@ class userInfoController {
           ...doc.data(),
         }));
         console.log(data);
-        return res.status(201).json(data);
+        return res.status(201).json(
+          // data
+          { general: "Here!" }
+        );
       });
     } catch (error) {
       return res
@@ -34,7 +59,7 @@ class userInfoController {
 
   async createInformation(req, res, next) {
     try {
-      const newCustomer = new Customer(req.body);
+      const newUser = new User(req.body);
       await db.collection("users").doc(user.uid).set({
         uid: user.uid,
         email: user.email,

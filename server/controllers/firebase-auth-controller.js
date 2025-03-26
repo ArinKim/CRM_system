@@ -64,9 +64,10 @@ class FirebaseAuthController {
       .then((userCredential) => {
         const idToken = userCredential._tokenResponse.idToken;
         if (idToken) {
-          res.cookie("access_token", idToken, {
-            httpOnly: true,
-          });
+          // res.cookie("access_token", idToken, {
+          //   httpOnly: true,
+          // });
+          console.log(idToken);
           res
             .status(200)
             .json({ message: "User logged in successfully", userCredential });
