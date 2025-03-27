@@ -39,4 +39,7 @@ export {
   signOut,
   sendEmailVerification,
   sendPasswordResetEmail,
+  Timestamp,
+  FieldValue,
+  Filter,
 }; //export the app
