@@ -2,7 +2,7 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import {userRoute} from "./routers/user";
-import {customerRoute} from "./routers/customer";
+// import {customerRoute} from "./routers/customer";
 import cors from "cors";
 import helmet from "helmet";
 const app = express();
@@ -40,7 +40,7 @@ app.use((req, res, next) => {
 });
 app.use(express.json());
 app.use(userRoute);
-app.use("/api/customers", customerRoute);
+// app.use("/api/customers", customerRoute);
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);

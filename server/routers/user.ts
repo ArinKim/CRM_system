@@ -23,11 +23,9 @@ userRoute.get(
   userInfoController.getInformation
 );
 userRoute.post(
-  "/api/user/create-info/:uid",
-  userInfoController.createInformation
-);
-userRoute.put(
   "/api/user/update-info/:uid",
+  authMiddleware,
+
   userInfoController.updateInformation
 );
 userRoute.delete(

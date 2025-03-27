@@ -1,5 +1,5 @@
-const { admin } = require("../util/admin");
-const { createError } = require("../error.js");
+import { admin } from "../util/admin";
+import { createError } from "../error.js";
 
 const verifyToken = async (req, res, next) => {
   try {
@@ -22,8 +22,9 @@ const verifyToken = async (req, res, next) => {
       return;
     }
     const decodedIdToken = await admin.auth().verifyIdToken(idToken, true);
-    console.log("Valid ID token", decodedIdToken);
+    // console.log("Valid ID token", decodedIdToken);
     // return decodedIdToken;
+    res.locals.user = decodedIdToken;
     next();
   } catch (error) {
     createError(401, error);

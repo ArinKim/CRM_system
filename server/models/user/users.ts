@@ -17,7 +17,7 @@ export class User {
         return `User: ${this.username} ${this.email} ${this.occupation} ${this.country}`;
     }
 
-    public toJason(): UserInterface {
+    public toJson(): UserInterface {
         return {
             uid: this.uid,
             username: this.username,

@@ -1,16 +1,8 @@
-const { createError } = require("../error.js");
-const User = require("../models/users.js");
-const { db } = require("../util/admin.js");
+import { createError } from "../error";
+import { User } from "../models/user/users";
+import { db } from "../util/admin";
 
-const {
-  getAuth,
-  createUserWithEmailAndPassword,
-  signInWithEmailAndPassword,
-  signOut,
-  sendEmailVerification,
-  sendPasswordResetEmail,
-  getFirestore,
-} = require("../util/firebase.js");
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendEmailVerification, sendPasswordResetEmail, getFirestore } from "../util/firebase.js";
 
 class userInfoController {
   async getAllInformation(req, res, next) {
@@ -41,7 +33,6 @@ class userInfoController {
       } else {
         console.log("Document data:", doc.data());
       }
-
       return res.status(200).json(doc.data());
     } catch (error) {
       return res
@@ -50,24 +41,21 @@ class userInfoController {
     }
   }
 
-  async createInformation(req, res, next) {
+  async updateInformation(req, res, next) {
     try {
+      const currentUser = res.locals.user;
       const newUser = new User(req.body);
-      await db.collection("users").doc(user.uid).set({
-        uid: user.uid,
-        email: user.email,
-      });
+      newUser.uid = currentUser.uid;
+      newUser.email = currentUser.email;
+      console.log(newUser);
+      await db.collection("users").doc(currentUser.uid).set(newUser.toJson());
+      return res.status(200).json({ message: "User updated successfully" });
     } catch (error) {
+      console.log(error);
       return res
         .status(500)
         .json({ general: "Something went wrong, please try again :)" });
     }
-  }
-
-  async updateInformation(req, res, next) {
-    return res
-      .status(500)
-      .json({ general: "Something went wrong, please try again :)" });
   }
 
   async deleteInformation(req, res, next) {
