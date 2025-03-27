@@ -1,4 +1,5 @@
 const {
+  getFirestore,
   getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -6,22 +7,18 @@ const {
   sendEmailVerification,
   sendPasswordResetEmail,
 } = require("../util/firebase.js");
-
-// import {
-//   getAuth,
-//   createUserWithEmailAndPassword,
-//   signInWithEmailAndPassword,
-//   signOut,
-//   sendEmailVerification,
-//   sendPasswordResetEmail,
-// } from "../util/firebase.js";
+const { admin } = require("../util/admin.js");
 
 const auth = getAuth();
 
+const db = getFirestore();
+
 class FirebaseAuthController {
   registerUser(req, res) {
-    console.log(req.body);
+    // console.log(req.body);
     const { email, password } = req.body;
+
+    // const newUserRef = db.collection('users').doc();
     if (!email || !password) {
       return res.status(422).json({
         email: "Email is required",
@@ -31,7 +28,14 @@ class FirebaseAuthController {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         sendEmailVerification(auth.currentUser)
-          .then(() => {
+          .then(async () => {
+            // console.log(db);
+            // console.log(userCredential.user.uid);
+            await db.collection("users").doc(`${userCredential.user.uid}`).set({
+              uid: userCredential.user.uid,
+              email: userCredential.user.email,
+            });
+
             res.status(201).json({
               message: "Verification email sent! User created successfully!",
             });
@@ -60,9 +64,10 @@ class FirebaseAuthController {
       .then((userCredential) => {
         const idToken = userCredential._tokenResponse.idToken;
         if (idToken) {
-          res.cookie("access_token", idToken, {
-            httpOnly: true,
-          });
+          // res.cookie("access_token", idToken, {
+          //   httpOnly: true,
+          // });
+          console.log(idToken);
           res
             .status(200)
             .json({ message: "User logged in successfully", userCredential });

@@ -1,9 +1,6 @@
 // import firebase from "firebase";
 const firebase = require("firebase/app");
 
-// Import the functions you need from the SDKs you need
-// import { initializeApp } from "firebase/app";
-const { initializeApp } = require("firebase-admin/app");
 const {
   getAuth,
   createUserWithEmailAndPassword,
@@ -12,8 +9,13 @@ const {
   sendEmailVerification,
   sendPasswordResetEmail,
 } = require("firebase/auth");
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+
+const {
+  getFirestore,
+  Timestamp,
+  FieldValue,
+  Filter,
+} = require("firebase-admin/firestore");
 
 require("dotenv").config();
 
@@ -27,12 +29,10 @@ const firebaseConfig = {
   appId: process.env.FIREBASE_APP_ID,
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-
 firebase.initializeApp(firebaseConfig); //initialize firebase app
-module.exports = {
+export {
   firebase,
+  getFirestore,
   getAuth,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
