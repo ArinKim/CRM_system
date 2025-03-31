@@ -1,4 +1,4 @@
-import { Project } from "../models/project.model";
+import { Project } from "../models/Project.model";
 
 export const MOCK_PROJECTS = [
   new Project({

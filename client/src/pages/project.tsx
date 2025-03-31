@@ -1,5 +1,5 @@
-import { MOCK_PROJECTS } from "../data/projects";
-import ProjectList from "./ProjectList";
+import { MOCK_PROJECTS } from "../data/Projects";
+import ProjectList from "../components/Projects/ProjectList";
 
 function ProjectPage() {
     return  (
