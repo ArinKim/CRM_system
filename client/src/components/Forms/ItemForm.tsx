@@ -1,25 +1,25 @@
-import { Project } from "../../models/Project.model";
+import { Item } from "../../models/Item.model";
 import { SyntheticEvent } from "react";
 
-interface ProjectFormProps {
-  onSave: (project: Project) => void;
+interface ItemFormProps {
+  onSave: (project: Item) => void;
   onCancel: () => void;
 }
 
-function ProjectForm({ onSave, onCancel }: ProjectFormProps) {
+function ItemForm({ onSave, onCancel }: ItemFormProps) {
   const handleSubmit = (event: SyntheticEvent) => {
     event.preventDefault();
-    onSave(new Project({ name: "Updated Project" }));
+    onSave(new Item({ name: "Updated Item" }));
   };
 
   return (
     <form className="input-group vertical" onSubmit={handleSubmit}>
-      <label htmlFor="name">Project Name</label>
+      <label htmlFor="name">Item Name</label>
       <input type="text" name="name" placeholder="enter name" />
-      <label htmlFor="description">Project Description</label>
+      <label htmlFor="description">Item Description</label>
 
       <textarea name="description" placeholder="enter description"></textarea>
-      <label htmlFor="budget">Project Budget</label>
+      <label htmlFor="budget">Item Budget</label>
 
       <input type="number" name="budget" placeholder="enter budget" />
       <label htmlFor="isActive">Active?</label>
@@ -36,4 +36,4 @@ function ProjectForm({ onSave, onCancel }: ProjectFormProps) {
   );
 }
 
-export default ProjectForm;
+export default ItemForm;

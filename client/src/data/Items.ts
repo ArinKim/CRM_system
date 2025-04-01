@@ -1,7 +1,7 @@
-import { Project } from "../models/Project.model";
+import { Item } from "../models/Item.model";
 
-export const MOCK_PROJECTS = [
-  new Project({
+export const MOCK_ITEMS = [
+  new Item({
     id: 1,
     name: "Johnson - Kutch",
     description:
@@ -12,7 +12,7 @@ export const MOCK_PROJECTS = [
     budget: 54637,
     isActive: false,
   }),
-  new Project({
+  new Item({
     id: 2,
     name: "Wisozk Group",
     description:
@@ -23,7 +23,7 @@ export const MOCK_PROJECTS = [
     budget: 91638,
     isActive: true,
   }),
-  new Project({
+  new Item({
     id: 3,
     name: "Denesik LLC",
     description:
@@ -34,7 +34,7 @@ export const MOCK_PROJECTS = [
     budget: 29729,
     isActive: true,
   }),
-  new Project({
+  new Item({
     id: 4,
     name: "Purdy, Keeling and Smitham",
     description:
@@ -45,7 +45,7 @@ export const MOCK_PROJECTS = [
     budget: 45660,
     isActive: true,
   }),
-  new Project({
+  new Item({
     id: 5,
     name: "Kreiger - Waelchi",
     description:
@@ -56,7 +56,7 @@ export const MOCK_PROJECTS = [
     budget: 81188,
     isActive: true,
   }),
-  new Project({
+  new Item({
     id: 6,
     name: "Lesch - Waelchi",
     description:
