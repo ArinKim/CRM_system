@@ -6,12 +6,13 @@ function formatDescription(description: string): string {
 
 interface ProjectCardProps {
   project: Project;
+  onEdit: (project: Project) => void;
 }
 
 function ProjectCard(props: ProjectCardProps) {
-  const { project } = props;
+  const { project, onEdit } = props;
   const handleEditClicked = (projectBeingEdited: Project) => {
-    console.log("Edit clicked", projectBeingEdited);
+    onEdit(projectBeingEdited);
   };
   return (
     <div className="card">
@@ -20,8 +21,7 @@ function ProjectCard(props: ProjectCardProps) {
           <strong>{project.name}</strong>
         </h5>
         <p>{formatDescription(project.description)}</p>
-        <button className="bordered"
-          onClick={() => handleEditClicked(project)}  >
+        <button className="bordered" onClick={() => handleEditClicked(project)}>
           <span className="icon-edit "></span>
           Edit
         </button>
