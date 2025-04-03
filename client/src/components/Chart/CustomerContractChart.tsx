@@ -16,7 +16,7 @@ export const data = [
 // https://www.react-google-charts.com/examples/timeline
 function CustomerContractChart() {
   return (
-    <div className="schedule-container">
+    <div className="schedule-container" style={{ width: "100%" }}>
       <h1 className="schedule">Customer Schedule</h1>
 
       <div className="schedule-description">
@@ -25,7 +25,12 @@ function CustomerContractChart() {
           that displays the start and end dates of each customer's schedule.
         </p>
       </div>
-      <Chart chartType="Timeline" data={data} width="100%" height="400px" />
+      <div
+        className="container"
+        style={{ backgroundColor: "rgb(255 255 255)", alignItems: "center" }}
+      >
+        <Chart chartType="Timeline" data={data} width="auto" />
+      </div>
     </div>
   );
 }

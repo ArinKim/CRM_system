@@ -33,7 +33,7 @@ const options = {
 
 function DailySalesChart() {
   return (
-    <div className="salse-container">
+    <div className="sales-container" style={{ width: "50%" }}>
       <h1 className="sales">Sales</h1>
 
       <div className="sales-description">
@@ -46,8 +46,8 @@ function DailySalesChart() {
         chartType="PieChart"
         data={data}
         options={options}
-        width={"100%"}
-        height={"400px"}
+        width="auto"
+        height="400px"
       />
     </div>
   );
