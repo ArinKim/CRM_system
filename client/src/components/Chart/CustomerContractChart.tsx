@@ -17,12 +17,12 @@ export const data = [
 function CustomerContractChart() {
   return (
     <div className="schedule-container" style={{ width: "100%" }}>
-      <h1 className="schedule">Customer Schedule</h1>
+      <h1 className="schedule">Customer Contracts</h1>
 
       <div className="schedule-description">
         <p>
-          This chart shows the schedule of customers. The chart is a timeline
-          that displays the start and end dates of each customer's schedule.
+          This chart shows the contracts of customers. The chart is a timeline
+          that displays the start and end dates of each customer's contract.
         </p>
       </div>
       <div
