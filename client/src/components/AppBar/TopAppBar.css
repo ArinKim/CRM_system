@@ -1,0 +1,32 @@
+.appbar-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    color: #fff;
+    padding: 1rem;
+}
+
+.nav-left {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.navigation-icon-appbar {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+
+.navigation-icon-appbar:hover {
+    transform: scale(1.1);
+}
+
+.appbar-icon {
+    width: 50px;
+    height: 24px;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
