@@ -25,12 +25,12 @@ userRoute.get(
 userRoute.post(
   "/api/user/update-info/:uid",
   authMiddleware,
-
   userInfoController.updateInformation
 );
 userRoute.delete(
   "/api/user/delete-info/:uid",
+  authMiddleware,
   userInfoController.deleteInformation
 );
 
-export {userRoute};
+export { userRoute };
