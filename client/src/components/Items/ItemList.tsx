@@ -2,6 +2,8 @@ import { useState } from "react";
 import { Item } from "../../models/Item.model";
 import ItemForm from "../Forms/ItemForm";
 import ItemCard from "./ItemCard";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
 
 interface ItemListProps {
   items: Item[];
@@ -28,7 +30,21 @@ function ItemList({ items, onSave }: ItemListProps) {
       )}
     </div>
   ));
-  return <div className="row">{elements}</div>;
+  return (
+    <Box sx={{ flexGrow: 1 }}>
+      <Grid
+        container
+        spacing={{ xs: 2, md: 3 }}
+        columns={{ xs: 4, sm: 8, md: 12 }}
+      >
+        {Array.from(Array(6)).map((_, index) => (
+          <Grid key={index} size={{ xs: 2, sm: 4, md: 4 }}>
+            {elements[index]}
+          </Grid>
+        ))}
+      </Grid>
+    </Box>
+  );
 }
 
 export default ItemList;
