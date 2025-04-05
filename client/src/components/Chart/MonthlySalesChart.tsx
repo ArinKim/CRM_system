@@ -29,7 +29,7 @@ function MonthlySalesChart() {
 
       <div className="sales-description">
         <p>
-          This chart shows the sales of customers. The chart is a pie chart that
+          This chart shows the sales of customers. The chart is a bar chart that
           displays the sales of each customer.
         </p>
       </div>
