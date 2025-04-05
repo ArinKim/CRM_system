@@ -18,7 +18,6 @@ import ListItemIcon from "@mui/material/ListItemIcon";
 import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
-import TopAppBar from "../AppBar/TopAppBar";
 import { NavLink } from "react-router";
 import AccountMenu from "../Menu/AccountMenu";
 
@@ -73,15 +72,6 @@ const AppBar = styled(MuiAppBar, {
     },
   ],
 }));
-
-const DrawerButton = styled(IconButton)({
-  color: "primary",
-  backgroundColor: "transparent",
-  border: "none",
-  // '&:hover': {
-  //   backgroundColor: purple[700],
-  // },
-});
 
 const DrawerHeader = styled("div")(({ theme }) => ({
   display: "flex",

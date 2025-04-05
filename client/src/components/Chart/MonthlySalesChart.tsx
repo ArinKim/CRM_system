@@ -24,7 +24,7 @@ export const options = {
 
 function MonthlySalesChart() {
   return (
-    <div className="sales-container" style={{ width: "50%" }}>
+    <div className="sales-container" style={{ width: "50%", padding: "5px" }}>
       <h1 className="sales">Monthly Sales</h1>
 
       <div className="sales-description">

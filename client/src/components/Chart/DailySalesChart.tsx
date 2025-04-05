@@ -33,7 +33,7 @@ const options = {
 
 function DailySalesChart() {
   return (
-    <div className="sales-container" style={{ width: "50%" }}>
+    <div className="sales-container" style={{ width: "50%", padding: "5px" }}>
       <h1 className="sales">Sales</h1>
 
       <div className="sales-description">
