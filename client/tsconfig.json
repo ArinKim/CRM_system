@@ -1,7 +1,6 @@
 {
   "compilerOptions": {
     "target": "es2016",
-    "moduleResolution": "node16",
     "jsx": "preserve",
     "module": "esnext",
     "esModuleInterop": true,

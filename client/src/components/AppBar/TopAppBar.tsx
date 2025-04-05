@@ -1,7 +1,7 @@
 import React from "react";
 import "./TopAppBar.css";
-import { FaUserCircle } from "react-icons/fa";
 import { NavLink } from "react-router";
+import AccountMenu from "../Menu/AccountMenu";
 
 function TopAppBar() {
   return (
@@ -15,11 +15,7 @@ function TopAppBar() {
         </NavLink>
       </div>
       <div className="nav-right">
-        <NavLink to="/user" className="navigation-icon-appbar">
-          <span className="appbar-icon">
-            <FaUserCircle />
-          </span>
-        </NavLink>
+        <AccountMenu />
       </div>
     </header>
   );

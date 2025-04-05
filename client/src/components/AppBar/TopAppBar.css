@@ -13,20 +13,9 @@
     gap: 1rem;
 }
 
-.navigation-icon-appbar {
-    width: 24px;
-    height: 24px;
-    cursor: pointer;
-    transition: transform 0.3s;
+.nav-right {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
 }
 
-.navigation-icon-appbar:hover {
-    transform: scale(1.1);
-}
-
-.appbar-icon {
-    width: 50px;
-    height: 24px;
-    cursor: pointer;
-    transition: transform 0.3s;
-}
