@@ -2,7 +2,6 @@
   "name": "crm",
   "version": "0.1.0",
   "private": true,
-  "description": "https://github.com/mui/toolpad/blob/v0.13.0/docs/data/toolpad/core/components/dashboard-layout/DashboardLayoutBasic.tsx",
   "dependencies": {
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.0",

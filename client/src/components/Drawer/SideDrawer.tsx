@@ -20,6 +20,10 @@ import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import { NavLink } from "react-router";
 import AccountMenu from "../Menu/AccountMenu";
+import DashboardIcon from "@mui/icons-material/Dashboard";
+import BorderColorIcon from "@mui/icons-material/BorderColor";
+import SettingsIcon from "@mui/icons-material/Settings";
+import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
 
 const drawerWidth = 240;
 
@@ -159,26 +163,46 @@ export default function SideDrawer() {
         </DrawerHeader>
         <Divider />
         <List>
-          {["Inbox", "Starred", "Send email", "Drafts"].map((text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
+          {[
+            {
+              icon: <DashboardIcon />,
+              text: "Dashboard",
+              path: "/",
+            },
+            { icon: <BorderColorIcon />, text: "Orders", path: "/orders" },
+            {
+              icon: <SupervisorAccountIcon />,
+              text: "Customers",
+              path: "/customers",
+            },
+            { icon: <SettingsIcon />, text: "Settings", path: "/settings" },
+          ].map((item, index) => (
+            <ListItem key={item.text} disablePadding>
+              <ListItemButton component={NavLink} to={item.path}>
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.text} />
               </ListItemButton>
             </ListItem>
           ))}
         </List>
         <Divider />
         <List>
-          {["All mail", "Trash", "Spam"].map((text, index) => (
-            <ListItem key={text} disablePadding>
+          {[
+            {
+              icon: <InboxIcon />,
+              text: "Inbox",
+              path: "/inbox",
+            },
+            {
+              icon: <MailIcon />,
+              text: "Drafts",
+              path: "/drafts",
+            },
+          ].map((item, index) => (
+            <ListItem key={item.text} disablePadding>
               <ListItemButton>
-                <ListItemIcon>
-                  {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
+                <ListItemIcon>{item.icon}</ListItemIcon>
+                <ListItemText primary={item.text} />
               </ListItemButton>
             </ListItem>
           ))}
