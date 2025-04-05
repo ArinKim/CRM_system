@@ -1,9 +1,9 @@
 import express from "express";
 const userRoute = express.Router();
 
-const firebaseAuthController = require("../controllers/firebase-auth-controller");
-const userInfoController = require("../controllers/user-info-controller");
-const authMiddleware = require("../middleware/auth-middleware");
+const firebaseAuthController = require("../controllers/firebase-auth");
+const userInfoController = require("../controllers/user-info");
+const authMiddleware = require("../middleware/auth");
 
 // Auth
 userRoute.post("/api/register", firebaseAuthController.registerUser);
