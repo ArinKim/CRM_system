@@ -1,7 +1,5 @@
 import { User } from "../user/users";
 import { CustomerInterface } from "./customer.interface";
-import { User } from "../user/users";
-import { CustomerInterface } from "./customer.interface";
 
 export class Customer {
   public id: string;
