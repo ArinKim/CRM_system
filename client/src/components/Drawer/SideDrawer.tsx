@@ -24,6 +24,7 @@ import DashboardIcon from "@mui/icons-material/Dashboard";
 import BorderColorIcon from "@mui/icons-material/BorderColor";
 import SettingsIcon from "@mui/icons-material/Settings";
 import SupervisorAccountIcon from "@mui/icons-material/SupervisorAccount";
+import InventoryIcon from "@mui/icons-material/Inventory";
 
 const drawerWidth = 240;
 
@@ -124,15 +125,7 @@ export default function SideDrawer() {
             component={NavLink}
             sx={{ textDecoration: "none", color: "white", padding: "0 10px" }}
           >
-            Home
-          </Typography>
-          <Typography
-            to="/items"
-            variant="h6"
-            component={NavLink}
-            sx={{ textDecoration: "none", color: "white", padding: "0 10px" }}
-          >
-            Items
+            CRM
           </Typography>
           <div className="profile-icon" style={{ marginLeft: "auto" }}>
             <AccountMenu />
@@ -168,6 +161,11 @@ export default function SideDrawer() {
               icon: <DashboardIcon />,
               text: "Dashboard",
               path: "/",
+            },
+            {
+              icon: <InventoryIcon />,
+              text: "Items",
+              path: "/items",
             },
             { icon: <BorderColorIcon />, text: "Orders", path: "/orders" },
             {
