@@ -1,4 +1,4 @@
-import {
+const {
   getFirestore,
   getAuth,
   createUserWithEmailAndPassword,
@@ -6,8 +6,8 @@ import {
   signOut,
   sendEmailVerification,
   sendPasswordResetEmail,
-} from "../util/firebase";
-import { admin } from "../util/admin";
+} = require("../util/firebase");
+const { admin } = require("../util/admin");
 
 const auth = getAuth();
 

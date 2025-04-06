@@ -2,11 +2,12 @@ import express from "express";
 import dotenv from "dotenv";
 import mongoose from "mongoose";
 import { userRoute } from "./routers/user";
-import { customerRoute } from "./routers/customer";
+// import {customerRoute} from "./routers/customer";
 import cors from "cors";
 import helmet from "helmet";
 const app = express();
 import session from "express-session";
+import { salesRoute } from "./routers/sales";
 
 dotenv.config();
 
@@ -24,7 +25,7 @@ app.use(
     cookie: {
       secure: true, // Ensures the browser only sends the cookie over HTTPS
       httpOnly: true, // Ensures the cookie is sent only over HTTP(S), not client JavaScript
-      sameSite: "Strict", // Ensures the cookie is sent only to the same site
+      sameSite: "strict", // Ensures the cookie is sent only to the same site
     },
   })
 );
@@ -39,9 +40,9 @@ app.use((req, res, next) => {
   next();
 });
 app.use(express.json());
-
 app.use(userRoute);
-app.use(customerRoute);
+app.use(salesRoute);
+// app.use("/api/customers", customerRoute);
 
 app.listen(PORT, () => {
   console.log(`Listening on port ${PORT}`);

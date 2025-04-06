@@ -4,7 +4,7 @@ export interface CustomerInterface {
   service?: string;
   email: string;
   phone?: string;
-  status: boolean;
-  createdAt: Date;
-  updatedAt: Date;
+  status?: boolean;
+  createdAt?: Date;
+  updatedAt?: Date;
 }

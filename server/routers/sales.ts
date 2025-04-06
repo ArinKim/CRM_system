@@ -1,34 +1,34 @@
 import express from "express";
 
-const firebaseAuthController = require("../controllers/firebase-auth");
-const salesInfoController = require("../controllers/sales-info");
-const authMiddleware = require("../middleware/auth");
+const firebaseAuthController = require("../controllers/firebase-auth-controller");
+const salesInfoController = require("../controllers/sales");
+const authMiddleware = require("../middleware/auth-middleware");
 
 const salesRoute = express.Router();
 
 salesRoute.get(
   "/api/sales/get-info/",
-  authMiddleware,
+  // authMiddleware,
   salesInfoController.getAllInformation
 );
 salesRoute.get(
-  "/api/sales/get-info/:uid",
-  authMiddleware,
+  "/api/sales/get-info/:id",
+  // authMiddleware,
   salesInfoController.getInformation
 );
 salesRoute.post(
-  "/api/sales/create-info/:uid",
-  authMiddleware,
+  "/api/sales/create-info/:id",
+  // authMiddleware,
   salesInfoController.createInformation
 );
 salesRoute.post(
-  "/api/sales/update-info/:uid",
-  authMiddleware,
+  "/api/sales/update-info/:id",
+  // authMiddleware,
   salesInfoController.updateInformation
 );
 salesRoute.delete(
-  "/api/sales/delete-info/:uid",
-  authMiddleware,
+  "/api/sales/delete-info/:id",
+  // authMiddleware,
   salesInfoController.deleteInformation
 );
 

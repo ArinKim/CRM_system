@@ -2,7 +2,15 @@ import { createError } from "../error";
 import { User } from "../models/user/users";
 import { db } from "../util/admin";
 
-import { getAuth, getFirestore } from "../util/firebase";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  sendEmailVerification,
+  sendPasswordResetEmail,
+  getFirestore,
+} from "../util/firebase";
 
 class userInfoController {
   async getAllInformation(req, res, next) {
@@ -47,7 +55,7 @@ class userInfoController {
       const newUser = new User(req.body);
       newUser.uid = currentUser.uid;
       newUser.email = currentUser.email;
-      // console.log(newUser);
+      console.log(newUser);
       await db.collection("users").doc(currentUser.uid).set(newUser.toJson());
       return res.status(200).json({ message: "User updated successfully" });
     } catch (error) {

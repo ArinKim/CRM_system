@@ -1,5 +1,5 @@
 import { admin } from "../util/admin";
-import { createError } from "../error";
+import { createError } from "../error.js";
 
 const verifyToken = async (req, res, next) => {
   try {

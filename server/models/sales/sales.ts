@@ -1,3 +1,4 @@
+import { CustomerInterface } from "../customer/customer.interface";
 import { Customer } from "../customer/customers";
 import { SalesInterface } from "./sales.interface";
 
@@ -31,10 +32,11 @@ export class Sales {
     return `Sales: ${this.id} ${this.customer} ${this.value.amount} ${this.value.currency} ${this.value.date}`;
   }
 
-  public toJson(): SalesInterface {
+  public toJson(): Record<string, any> {
+    const customerJson = this.customer.toJson();
     return {
       id: this.id,
-      customer: this.customer,
+      customer: customerJson,
       value: this.value,
     };
   }
