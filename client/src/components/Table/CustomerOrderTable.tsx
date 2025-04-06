@@ -1,7 +1,6 @@
 import * as React from "react";
 import { DataGrid, GridToolbar } from "@mui/x-data-grid";
 import { useDemoData } from "@mui/x-data-grid-generator";
-import Typography from "@mui/material/Typography";
 
 export default function ColumnSelectorGrid() {
   const { data } = useDemoData({
