@@ -11,21 +11,25 @@ salesRoute.get(
   // authMiddleware,
   salesInfoController.getAllInformation
 );
+
 salesRoute.get(
   "/api/sales/get-info/:id",
   // authMiddleware,
   salesInfoController.getInformation
 );
+
 salesRoute.post(
-  "/api/sales/create-info/:id",
+  "/api/sales/create-info/",
   // authMiddleware,
   salesInfoController.createInformation
 );
+
 salesRoute.post(
   "/api/sales/update-info/:id",
   // authMiddleware,
   salesInfoController.updateInformation
 );
+
 salesRoute.delete(
   "/api/sales/delete-info/:id",
   // authMiddleware,

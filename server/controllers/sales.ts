@@ -8,6 +8,8 @@ import {
   Filter,
 } from "../util/firebase";
 
+import { v4 as uuidv4 } from "uuid";
+
 const db = getFirestore();
 
 class SalesInfoController {
@@ -44,15 +46,14 @@ class SalesInfoController {
 
   async createInformation(req, res, next) {
     try {
-      const { id, value } = req.body;
+      const { customer, value } = req.body;
+      const id = uuidv4();
+
       const sales = new Sales({
         id: id,
         customer: new Customer({
           id: id,
-          company: "",
-          service: "",
-          email: "",
-          phone: "",
+          ...customer,
         }), // Ensure 'customer' is provided in the request body
         value: value,
       }).toJson();
@@ -60,13 +61,28 @@ class SalesInfoController {
       await db.collection("sales").doc(id).set(sales);
       return res.status(200).json({ message: "Create information" });
     } catch (error) {
-      console.log(error);
-      return res.status(500).json({ general: "Something went wrong" });
+      return res.status(500).json(error);
     }
   }
 
   async updateInformation(req, res, next) {
-    return res.status(200).json({ message: "Update information" });
+    try {
+      const { id, customer, value } = req.body;
+
+      const sales = new Sales({
+        id: id,
+        customer: new Customer({
+          id: id,
+          ...customer,
+        }), // Ensure 'customer' is provided in the request body
+        value: value,
+      }).toJson();
+
+      await db.collection("sales").doc(id).set(sales);
+      return res.status(200).json({ message: "Update information" });
+    } catch (error) {
+      return res.status(500).json(error);
+    }
   }
 
   async deleteInformation(req, res, next) {
