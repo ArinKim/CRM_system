@@ -15,6 +15,7 @@ function translateStatusToErrorMessage(status: number) {
 
 function checkStatus(response: any) {
   if (response.ok) {
+    console.log("log server http success");
     return response;
   } else {
     const httpErrorInfo = {
@@ -51,17 +52,19 @@ function convertToProjectModel(item: any): Sales {
 
 const DailySalesChartAPI = {
   get() {
-    return fetch(`${url}`)
-      .then(delay(600))
-      .then(checkStatus)
-      .then(parseJSON)
-      .then(convertToProjectModels)
-      .catch((error: TypeError) => {
-        console.log("log client error " + error);
-        throw new Error(
-          "There was an error retrieving the sales. Please try again."
-        );
-      });
+    return (
+      fetch(`${url}`)
+        //   .then(delay(600))
+        .then(checkStatus)
+        .then(parseJSON)
+        .then(convertToProjectModels)
+        .catch((error: TypeError) => {
+          console.log("log client error " + error);
+          throw new Error(
+            "There was an error retrieving the sales. Please try again."
+          );
+        })
+    );
   },
 };
 

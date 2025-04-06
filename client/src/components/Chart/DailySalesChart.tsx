@@ -54,6 +54,7 @@ function DailySalesChart() {
       setLoading(true);
       try {
         const data = await DailySalesChartAPI.get();
+        console.log(data);
         setError("");
         setSales(data);
       } catch (e) {
