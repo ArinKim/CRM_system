@@ -17,7 +17,7 @@ export class Customer {
     if (initializer.service) this.service = initializer.service;
     if (initializer.email) this.email = initializer.email;
     if (initializer.phone) this.phone = initializer.phone;
-    if (initializer.status) this.status = initializer.status;
+    if (initializer.status !== undefined) this.status = initializer.status;
     if (initializer.createdAt) this.createdAt = new Date(initializer.createdAt);
     if (initializer.updatedAt) this.updatedAt = new Date(initializer.updatedAt);
   }
