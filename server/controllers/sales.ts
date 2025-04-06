@@ -23,14 +23,23 @@ class SalesInfoController {
         return res.status(200).json(data);
       });
     } catch (error) {
-      return res
-        .status(500)
-        .json({ general: "Something went wrong, please try again" });
+      return res.status(500).json(error);
     }
   }
 
   async getInformation(req, res, next) {
-    return res.status(200).json({ message: "Get information" });
+    try {
+      const salesRef = db.collection("sales").doc(req.params.id);
+      const doc = await salesRef.get();
+      if (!doc.exists) {
+        console.log("No such document!");
+      } else {
+        console.log("Document data:", doc.data());
+      }
+      return res.status(200).json(doc.data());
+    } catch (error) {
+      return res.status(500).json(error);
+    }
   }
 
   async createInformation(req, res, next) {
