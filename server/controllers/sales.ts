@@ -12,7 +12,21 @@ const db = getFirestore();
 
 class SalesInfoController {
   async getAllInformation(req, res, next) {
-    return res.status(200).json({ message: "Get all information" });
+    try {
+      const salesRef = db.collection("sales");
+
+      salesRef.get().then((snapshot) => {
+        const data = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        return res.status(200).json(data);
+      });
+    } catch (error) {
+      return res
+        .status(500)
+        .json({ general: "Something went wrong, please try again" });
+    }
   }
 
   async getInformation(req, res, next) {
