@@ -33,11 +33,13 @@ export class Sales {
   }
 
   public toJson(): Record<string, any> {
-    const customerJson = this.customer.toJson();
-    return {
-      id: this.id,
-      customer: customerJson,
-      value: this.value,
-    };
+    const customerJson = this.customer?.toJson();
+    return !this.customer
+      ? { id: this.id, value: this.value }
+      : {
+          id: this.id,
+          customer: customerJson,
+          value: this.value,
+        };
   }
 }

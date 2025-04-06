@@ -2,7 +2,7 @@ import { Customer } from "../customer/customers";
 
 export interface SalesInterface {
   id: string;
-  customer: Customer;
+  customer?: Customer;
   value: {
     amount: number;
     currency: string;

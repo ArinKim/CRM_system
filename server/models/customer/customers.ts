@@ -28,6 +28,10 @@ export class Customer {
     return `Customer: ${this.id} ${this.company} ${this.service} ${this.email} ${this.phone} ${this.status} ${this.createdAt} ${this.updatedAt}`;
   }
 
+  public isEmpty(): boolean {
+    return !this.company && !this.service && !this.email && !this.phone;
+  }
+
   public toJson(): CustomerInterface {
     return {
       id: this.id,

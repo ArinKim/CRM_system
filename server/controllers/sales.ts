@@ -59,7 +59,7 @@ class SalesInfoController {
       }).toJson();
 
       await db.collection("sales").doc(id).set(sales);
-      return res.status(200).json({ message: "Create information" });
+      return res.status(200).json({ message: "Create information", id: id });
     } catch (error) {
       return res.status(500).json(error);
     }
@@ -67,20 +67,19 @@ class SalesInfoController {
 
   async updateInformation(req, res, next) {
     try {
-      const { id, customer, value } = req.body;
+      const { customer, value } = req.body;
+      const id = req.params.id;
 
       const sales = new Sales({
         id: id,
-        customer: new Customer({
-          id: id,
-          ...customer,
-        }), // Ensure 'customer' is provided in the request body
         value: value,
       }).toJson();
 
-      await db.collection("sales").doc(id).set(sales);
+      console.log(sales);
+      await db.collection("sales").doc(id).set(sales, { merge: true });
       return res.status(200).json({ message: "Update information" });
     } catch (error) {
+      console.log(error);
       return res.status(500).json(error);
     }
   }
