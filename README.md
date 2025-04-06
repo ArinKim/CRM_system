@@ -4,7 +4,7 @@
 This is a **Customer Relationship Management (CRM)** web application built using **Google Cloud Platform (GCP)** and modern web technologies. It provides user and customer management features with secure authentication.
 
 ## Tech Stack
-- **Frontend & Backend:** [Next.js](https://nextjs.org/) (React + Server-side Rendering)
+- **Frontend & Backend:** React
 - **Programming Languages:** JavaScript, TypeScript
 - **Server & API:** [Node.js](https://nodejs.org/)
 - **Database:** NoSQL - [Firestore](https://firebase.google.com/docs/firestore)
@@ -15,7 +15,6 @@ This is a **Customer Relationship Management (CRM)** web application built using
 - User authentication with Firebase Authentication
 - Customer data management with Firestore NoSQL database
 - Secure API routes for user and customer operations
-- Scalable and server-rendered using Next.js
 
 ## Project Structure
 <!---
@@ -39,7 +38,7 @@ This is a **Customer Relationship Management (CRM)** web application built using
 ### Prerequisites
 - Node.js (>= 16)
 - Firebase project setup
-- Google Cloud SDK (if deploying to GCP)
+- Google Cloud SDK
 
 ### Steps
 1. **Clone the repository**
