@@ -7,7 +7,7 @@ import {
   Filter,
 } from "../util/firebase";
 
-class customerInfoController {
+class CustomerInfoController {
   async getAllInformation(req, res, next) {
     return res.status(200).json({ message: "Get all information" });
   }
@@ -29,4 +29,4 @@ class customerInfoController {
   }
 }
 
-module.exports = new customerInfoController();
+module.exports = new CustomerInfoController();
