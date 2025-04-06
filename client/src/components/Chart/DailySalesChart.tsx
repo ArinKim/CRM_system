@@ -1,5 +1,7 @@
-import React from "react";
+import { useEffect, useState } from "react";
 import { Chart } from "react-google-charts";
+import { DailySalesChartAPI } from "./DailySalesChartAPI";
+import { Sales } from "../../models/sales/sales";
 
 const data = [
   ["Customers", "AUD"],
@@ -32,6 +34,40 @@ const options = {
 // https://www.react-google-charts.com/examples/pie-chart
 
 function DailySalesChart() {
+  const [sales, setSales] = useState<Sales[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | undefined>(undefined);
+
+  // useEffect(() => {
+  //   fetch("http://localhost:3300/api/sales/get-info/")
+  //     .then((res) => {
+  //       return res.json();
+  //     })
+  //     .then((data) => {
+  //       console.log(data);
+  //       setSales(data);
+  //     });
+  // }, []);
+
+  useEffect(() => {
+    async function loadSales() {
+      setLoading(true);
+      try {
+        const data = await DailySalesChartAPI.get();
+        console.log(data);
+        setError("");
+        setSales(data);
+      } catch (e) {
+        if (e instanceof Error) {
+          setError(e.message);
+        }
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadSales();
+  }, []);
+
   return (
     <div className="sales-container" style={{ width: "50%", padding: "5px" }}>
       <h1 className="sales">Daily Sales</h1>
@@ -42,6 +78,14 @@ function DailySalesChart() {
           displays the sales of each customer.
         </p>
       </div>
+      <div>
+        {sales?.map((item, index) => (
+          <div key={index}>
+            <p>{item.id}</p>
+          </div>
+        ))}
+      </div>
+
       <Chart
         chartType="PieChart"
         data={data}

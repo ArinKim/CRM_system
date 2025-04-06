@@ -1,4 +1,3 @@
-import { User } from "../user/users";
 import { CustomerInterface } from "./customer.interface";
 
 export class Customer {
@@ -11,11 +10,18 @@ export class Customer {
   public createdAt: Date = new Date();
   public updatedAt: Date = new Date();
 
-  constructor(value: CustomerInterface) {
-    for (const prop in value) {
-      this[prop] = value[prop];
-    }
+  constructor(initializer?: any) {
+    if (!initializer) return;
+    if (initializer.id) this.id = initializer.id;
+    if (initializer.company) this.company = initializer.company;
+    if (initializer.service) this.service = initializer.service;
+    if (initializer.email) this.email = initializer.email;
+    if (initializer.phone) this.phone = initializer.phone;
+    if (initializer.status !== undefined) this.status = initializer.status;
+    if (initializer.createdAt) this.createdAt = new Date(initializer.createdAt);
+    if (initializer.updatedAt) this.updatedAt = new Date(initializer.updatedAt);
   }
+
   public static fromJson(value: CustomerInterface): Customer {
     return new Customer(value);
   }

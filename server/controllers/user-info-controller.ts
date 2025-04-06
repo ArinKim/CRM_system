@@ -2,7 +2,15 @@ import { createError } from "../error";
 import { User } from "../models/user/users";
 import { db } from "../util/admin";
 
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, sendEmailVerification, sendPasswordResetEmail, getFirestore } from "../util/firebase.js";
+import {
+  getAuth,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
+  signOut,
+  sendEmailVerification,
+  sendPasswordResetEmail,
+  getFirestore,
+} from "../util/firebase";
 
 class userInfoController {
   async getAllInformation(req, res, next) {

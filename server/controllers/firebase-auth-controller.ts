@@ -6,8 +6,8 @@ const {
   signOut,
   sendEmailVerification,
   sendPasswordResetEmail,
-} = require("../util/firebase.js");
-const { admin } = require("../util/admin.js");
+} = require("../util/firebase");
+const { admin } = require("../util/admin");
 
 const auth = getAuth();
 

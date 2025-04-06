@@ -1,45 +1,32 @@
 import { Customer } from "../models/customer/customers";
+import {
+  getAuth,
+  getFirestore,
+  Timestamp,
+  FieldValue,
+  Filter,
+} from "../util/firebase";
 
-// export const createCustomer = async (req, res, next) => {
-//   const newCustomer = new Customer(req.body);
+class CustomerInfoController {
+  async getAllInformation(req, res, next) {
+    return res.status(200).json({ message: "Get all information" });
+  }
 
-//   try {
-//     const savedCustomer = await newCustomer.save();
-//     res.status(200).json(savedCustomer);
-//   } catch (err) {
-//     next(err);
-//   }
-// };
+  async getInformation(req, res, next) {
+    return res.status(200).json({ message: "Get information" });
+  }
 
-// export const deleteCustomer = async (req, res, next) => {
-//   try {
-//     await Customer.findByIdAndDelete(req.params.id);
-//     res.status(200).json("the Customer has been deleted");
-//   } catch (err) {
-//     next(err);
-//   }
-// };
+  async createInformation(req, res, next) {
+    return res.status(200).json({ message: "Create information" });
+  }
 
-// export const getCustomers = async (req, res, next) => {
-//   const userId = req.params.userId;
+  async updateInformation(req, res, next) {
+    return res.status(200).json({ message: "Update information" });
+  }
 
-//   try {
-//     const customers = await Customer.find({ company: userId });
-//     res.status(200).json(customers);
-//   } catch (err) {
-//     next(err);
-//   }
-// };
+  async deleteInformation(req, res, next) {
+    return res.status(200).json({ message: "Delete information" });
+  }
+}
 
-// export const updateCustomer = async (req, res, next) => {
-//   try {
-//     const customer = await Customer.findByIdAndUpdate(
-//       req.params.id,
-//       { $set: req.body },
-//       { new: true }
-//     );
-//     res.status(200).json(customer);
-//   } catch (err) {
-//     next(err);
-//   }
-// };
+module.exports = new CustomerInfoController();
