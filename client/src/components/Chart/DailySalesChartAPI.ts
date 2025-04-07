@@ -1,5 +1,5 @@
 import { Sales } from "../../models/sales/sales";
-const baseUrl = "http://localhost:4000";
+const baseUrl = "http://localhost:3300";
 const url = `${baseUrl}/api/sales/get-info/`;
 
 function translateStatusToErrorMessage(status: number) {
