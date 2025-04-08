@@ -1,53 +1,10 @@
-import * as React from "react";
+import { useEffect, useState } from "react";
 import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { Customer } from "../../models/customer/customers";
 import Button from "@mui/material/Button";
-import { sleep } from "../../utils/helpers";
+import { CustomerTableAPI } from "./CustomerTableAPI";
 
 const MAX_ROW_LENGTH = 1000;
-
-const rows = [
-  {
-    id: 1,
-    company: "Company A",
-    service: "Service A",
-    email: "compa@test.com",
-    phone: "0412345678",
-    status: true,
-  },
-  {
-    id: 2,
-    company: "Company B",
-    service: "Service B",
-    email: "compb@test.com",
-    phone: "0412345678",
-    status: true,
-  },
-  {
-    id: 3,
-    company: "Company C",
-    service: "Service C",
-    email: "compc@test.com",
-    phone: "0412345678",
-    status: true,
-  },
-  {
-    id: 4,
-    company: "Company D",
-    service: "Service D",
-    email: "compd@test.com",
-    phone: "0412345678",
-    status: false,
-  },
-  {
-    id: 5,
-    company: "Company E",
-    service: "Service E",
-    email: "compe@test.com",
-    phone: "0412345678",
-    status: true,
-  },
-];
 
 const keys = Customer.getKeyList();
 
@@ -84,11 +41,34 @@ const columns: GridColDef[] = [
 ];
 
 export default function ColumnSelectorGrid() {
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | undefined>(undefined);
+  const [customers, setCustomers] = useState<Customer[]>([]);
+
+  useEffect(() => {
+    async function loadCustomers() {
+      setLoading(true);
+      try {
+        const data = await CustomerTableAPI.get();
+
+        setError("");
+        setCustomers(data);
+      } catch (e) {
+        if (e instanceof Error) {
+          setError(e.message);
+        }
+      } finally {
+        setLoading(false);
+      }
+    }
+    loadCustomers();
+  }, []);
+
   return (
     <div className="customer-table-container" style={{ width: "100%" }}>
       <h1 className="customer-order-table-header">Customer Table</h1>
       <div style={{ height: 350, width: "100%" }}>
-        <DataGrid columns={columns} rows={rows} />
+        <DataGrid columns={columns} rows={customers} loading={loading} />
       </div>
     </div>
   );
