@@ -3,6 +3,10 @@
 ## Overview
 This is a **Customer Relationship Management (CRM)** web application built using **Google Cloud Platform (GCP)** and modern web technologies. It provides user and customer management features with secure authentication.
 
+## The reason of this project
+While I was working in a grocery store, I always thing 'is there any better idea to see stocks, vendors, and other details?'
+This is the project if I imagine I have to create a CRM software with my needs
+
 ## Tech Stack
 - **Frontend & Backend:** React
 - **Programming Languages:** JavaScript, TypeScript
