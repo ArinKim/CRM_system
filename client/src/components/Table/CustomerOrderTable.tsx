@@ -5,10 +5,11 @@ import {
   GridRenderCellParams,
   GridToolbar,
 } from "@mui/x-data-grid";
-import { useDemoData } from "@mui/x-data-grid-generator";
 import { Customer } from "../../models/customer/customers";
-import { CustomerInterface } from "../../models/customer/customer.interface";
 import Button from "@mui/material/Button";
+import { sleep } from "../../utils/helpers";
+
+const MAX_ROW_LENGTH = 1000;
 
 const rows = [
   {
@@ -78,13 +79,9 @@ const columns: GridColDef[] = [
     renderCell: (params: GridRenderCellParams<any, Date>) => (
       <div className="button">
         {params.value ? (
-          <Button variant="contained" color="success">
-            Active
-          </Button>
+          <Button color="success">Active</Button>
         ) : (
-          <Button variant="contained" color="error">
-            Inactive
-          </Button>
+          <Button color="error">Inactive</Button>
         )}
       </div>
     ),

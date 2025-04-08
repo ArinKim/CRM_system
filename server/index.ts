@@ -8,6 +8,7 @@ import helmet from "helmet";
 const app = express();
 import session from "express-session";
 import { salesRoute } from "./routers/sales";
+import { customerRoute } from "./routers/customer";
 
 dotenv.config();
 
@@ -25,7 +26,7 @@ app.use((req, res, next) => {
 app.use(express.json());
 app.use(userRoute);
 app.use(salesRoute);
-// app.use("/api/customers", customerRoute);
+app.use(customerRoute);
 app.get("/", (req, res) => {
   res.send("Hello from Express!");
 });
