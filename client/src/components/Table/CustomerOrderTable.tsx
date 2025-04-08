@@ -1,97 +1,71 @@
 import * as React from "react";
-import {
-  DataGrid,
-  GridColDef,
-  GridRenderCellParams,
-  GridToolbar,
-} from "@mui/x-data-grid";
-import { Customer } from "../../models/customer/customers";
-import Button from "@mui/material/Button";
-import { sleep } from "../../utils/helpers";
+import Stack from "@mui/material/Stack";
+import FormControl from "@mui/material/FormControl";
+import Select, { SelectChangeEvent } from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import InputLabel from "@mui/material/InputLabel";
+import { DataGrid, GridToolbar } from "@mui/x-data-grid";
+import { useDemoData } from "@mui/x-data-grid-generator";
+import { table } from "console";
 
-const MAX_ROW_LENGTH = 1000;
+const UserType = {
+  Regular: 0,
+  Admin: 1,
+};
 
-const rows = [
-  {
-    id: 1,
-    company: "Company A",
-    service: "Service A",
-    email: "compa@test.com",
-    phone: "0412345678",
-    status: true,
-  },
-  {
-    id: 2,
-    company: "Company B",
-    service: "Service B",
-    email: "compb@test.com",
-    phone: "0412345678",
-    status: true,
-  },
-  {
-    id: 3,
-    company: "Company C",
-    service: "Service C",
-    email: "compc@test.com",
-    phone: "0412345678",
-    status: true,
-  },
-  {
-    id: 4,
-    company: "Company D",
-    service: "Service D",
-    email: "compd@test.com",
-    phone: "0412345678",
-    status: false,
-  },
-  {
-    id: 5,
-    company: "Company E",
-    service: "Service E",
-    email: "compe@test.com",
-    phone: "0412345678",
-    status: true,
-  },
-];
+export default function ColumnSelectorDisabledGrid() {
+  const [userType, setUserType] = React.useState(UserType.Regular);
+  const { data } = useDemoData({
+    dataSet: "Commodity",
+    rowLength: 10,
+    maxColumns: 7,
+  });
 
-const keys = Customer.getKeyList();
+  const columnVisibilityModel = React.useMemo(() => {
+    if (userType === UserType.Admin) {
+      return {
+        quantity: true,
+        filledQuantity: true,
+        id: true,
+      };
+    }
+    return {
+      quantity: false,
+      filledQuantity: false,
+      id: false,
+    };
+  }, [userType]);
 
-const columns: GridColDef[] = [
-  {
-    field: keys[0],
-    headerName: keys[0],
-    width: 100,
-    description:
-      "The identification used by the person with access to the online service.",
-  },
-  {
-    field: keys[1],
-    headerName: keys[1],
-    width: 150,
-  },
-  { field: keys[2], headerName: keys[2], width: 150 },
-  { field: keys[3], headerName: keys[3], width: 150 },
-  { field: keys[4], headerName: keys[4], width: 150 },
-  {
-    field: keys[5],
-    headerName: keys[5],
-    width: 150,
-    renderCell: (params: GridRenderCellParams<any, Date>) => (
-      <div className="button">
-        {params.value ? (
-          <Button color="success">Active</Button>
-        ) : (
-          <Button color="error">Inactive</Button>
-        )}
-      </div>
-    ),
-  },
-];
-
-export default function ColumnSelectorGrid() {
   return (
-    <div style={{ height: 250, width: "100%" }}>
-      <DataGrid columns={columns} rows={rows} />
+    <div className="customer-order-table-container" style={{ width: "100%" }}>
+      <h1 className="customer-order-table-header">Customer Order Table</h1>
+      <Stack>
+        <FormControl sx={{ width: "200px", pb: 1 }}>
+          <InputLabel id="demo-simple-select-label">User Type</InputLabel>
+          <Select
+            labelId="demo-user-type-label"
+            id="demo-user-type"
+            value={userType}
+            label="User Type"
+            onChange={(event: SelectChangeEvent<number>) => {
+              setUserType(event.target.value as number);
+            }}
+          >
+            <MenuItem value={UserType.Regular}>Regular User</MenuItem>
+            <MenuItem value={UserType.Admin}>Admin</MenuItem>
+          </Select>
+        </FormControl>
+        <div style={{ height: 400, width: "100%" }}>
+          <DataGrid
+            {...data}
+            disableColumnSelector
+            columnVisibilityModel={columnVisibilityModel}
+            slots={{
+              toolbar: GridToolbar,
+            }}
+          />
+        </div>
+      </Stack>
     </div>
   );
 }

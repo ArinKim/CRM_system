@@ -3,8 +3,8 @@ import React from "react";
 import DailySalesChart from "../../components/Chart/DailySalesChart";
 import MonthlySalesChart from "../../components/Chart/MonthlySalesChart";
 import CustomerContractChart from "../../components/Chart/CustomerContractChart";
-import ColumnSelectorDisabledGrid from "../../components/Table/UserTable";
-import ColumnSelectorGrid from "../../components/Table/CustomerOrderTable";
+import CustomerTable from "../../components/Table/CustomerTable";
+import CustomerOrderTable from "../../components/Table/CustomerOrderTable";
 
 export default function HomePage() {
   return (
@@ -14,8 +14,9 @@ export default function HomePage() {
         <MonthlySalesChart />
       </div>
       <div className="contract-container">
-        <ColumnSelectorGrid />
-        <ColumnSelectorDisabledGrid />
+        <CustomerTable />
+
+        <CustomerOrderTable />
         <CustomerContractChart />
       </div>
     </div>
