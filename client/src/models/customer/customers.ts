@@ -30,6 +30,19 @@ export class Customer {
     return value.map((item) => new Customer(item));
   }
 
+  public static getKeyList(): string[] {
+    return [
+      "id",
+      "company",
+      "service",
+      "email",
+      "phone",
+      "status",
+      "createdAt",
+      "updatedAt",
+    ];
+  }
+
   public toString(): string {
     return `Customer: ${this.id} ${this.company} ${this.service} ${this.email} ${this.phone} ${this.status} ${this.createdAt} ${this.updatedAt}`;
   }

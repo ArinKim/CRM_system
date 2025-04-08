@@ -1,4 +1,4 @@
-import { Sales } from "../../models/sales/sales";
+import { Customer } from "../../models/customer/customers";
 import {
   parseJSON,
   checkStatus,
@@ -6,25 +6,25 @@ import {
 } from "../../utils/helpers";
 
 const baseUrl = "http://localhost:3300";
-const url = `${baseUrl}/api/sales/get-info/`;
+const url = `${baseUrl}/api/customer/get-info/`;
 
-function convertToProjectModels(data: any[]): Sales[] {
-  let sales: Sales[] = data.map(convertToProjectModel);
-  return sales;
+function convertToCustomertModels(data: any[]): Customer[] {
+  let customer: Customer[] = data.map(convertToCustomertModel);
+  return customer;
 }
 
-function convertToProjectModel(item: any): Sales {
-  return new Sales(item);
+function convertToCustomertModel(item: any): Customer {
+  return new Customer(item);
 }
 
-const DailySalesChartAPI = {
+const CustomerTableAPI = {
   get() {
     return (
       fetch(`${url}`)
         //   .then(delay(600))
         .then(checkStatus)
         .then(parseJSON)
-        .then(convertToProjectModels)
+        .then(convertToCustomertModels)
         .catch((error: TypeError) => {
           console.log("log client error " + error);
           throw translateStatusToErrorMessage(
@@ -35,4 +35,4 @@ const DailySalesChartAPI = {
   },
 };
 
-export { DailySalesChartAPI };
+export { CustomerTableAPI };

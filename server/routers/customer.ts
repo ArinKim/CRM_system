@@ -1,12 +1,39 @@
-// // const express = require("express");
-// import express from "express";
-// import { createCustomer, deleteCustomer, getCustomers, updateCustomer } from "../controllers/customer";
+import express from "express";
 
-// const customerRoute = express.Router();
+const firebaseAuthController = require("../controllers/firebase-auth-controller");
+const customerInfoController = require("../controllers/customer");
+const authMiddleware = require("../middleware/auth-middleware");
 
-// customerRoute.post("/", createCustomer);
-// customerRoute.put("/:id", updateCustomer);
-// customerRoute.delete("/:id", deleteCustomer);
-// customerRoute.get("/:userId", getCustomers);
+const customerRoute = express.Router();
 
-// export {customerRoute};
+customerRoute.get(
+  "/api/customer/get-info/",
+  // authMiddleware,
+  customerInfoController.getAllInformation
+);
+
+customerRoute.get(
+  "/api/customer/get-info/:id",
+  // authMiddleware,
+  customerInfoController.getInformation
+);
+
+customerRoute.post(
+  "/api/customer/create-info/",
+  // authMiddleware,
+  customerInfoController.createInformation
+);
+
+customerRoute.post(
+  "/api/customer/update-info/:id",
+  // authMiddleware,
+  customerInfoController.updateInformation
+);
+
+customerRoute.delete(
+  "/api/customer/delete-info/:id",
+  // authMiddleware,
+  customerInfoController.deleteInformation
+);
+
+export { customerRoute };
