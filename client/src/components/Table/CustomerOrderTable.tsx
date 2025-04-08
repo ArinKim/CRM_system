@@ -1,6 +1,14 @@
 import * as React from "react";
-import { DataGrid, GridColDef, GridToolbar } from "@mui/x-data-grid";
+import {
+  DataGrid,
+  GridColDef,
+  GridRenderCellParams,
+  GridToolbar,
+} from "@mui/x-data-grid";
 import { useDemoData } from "@mui/x-data-grid-generator";
+import { Customer } from "../../models/customer/customers";
+import { CustomerInterface } from "../../models/customer/customer.interface";
+import Button from "@mui/material/Button";
 
 const rows = [
   {
@@ -33,7 +41,7 @@ const rows = [
     service: "Service D",
     email: "compd@test.com",
     phone: "0412345678",
-    status: true,
+    status: false,
   },
   {
     id: 5,
@@ -45,39 +53,45 @@ const rows = [
   },
 ];
 
+const keys = Customer.getKeyList();
+
 const columns: GridColDef[] = [
   {
-    field: "id",
-    headerName: "ID",
+    field: keys[0],
+    headerName: keys[0],
     width: 100,
     description:
       "The identification used by the person with access to the online service.",
   },
-  { field: "company", headerName: "company", width: 150 },
-  { field: "service", headerName: "service", width: 150 },
-  { field: "email", headerName: "email", width: 150 },
-  { field: "phone", headerName: "phone", width: 150 },
-  { field: "status", headerName: "status", width: 150 },
+  {
+    field: keys[1],
+    headerName: keys[1],
+    width: 150,
+  },
+  { field: keys[2], headerName: keys[2], width: 150 },
+  { field: keys[3], headerName: keys[3], width: 150 },
+  { field: keys[4], headerName: keys[4], width: 150 },
+  {
+    field: keys[5],
+    headerName: keys[5],
+    width: 150,
+    renderCell: (params: GridRenderCellParams<any, Date>) => (
+      <div className="button">
+        {params.value ? (
+          <Button variant="contained" color="success">
+            Active
+          </Button>
+        ) : (
+          <Button variant="contained" color="error">
+            Inactive
+          </Button>
+        )}
+      </div>
+    ),
+  },
 ];
 
 export default function ColumnSelectorGrid() {
-  // const { data } = useDemoData({
-  //   dataSet: "Commodity",
-  //   rowLength: 10,
-  //   maxColumns: 10,
-  // });
-
-  // return (
-  //   <div style={{ width: "100%" }}>
-  //     <h1 className="customer-order-table-header">Customer Order Table</h1>
-  //     <DataGrid
-  //       {...data}
-  //       slots={{
-  //         toolbar: GridToolbar,
-  //       }}
-  //     />
-  //   </div>
-  // );
   return (
     <div style={{ height: 250, width: "100%" }}>
       <DataGrid columns={columns} rows={rows} />
