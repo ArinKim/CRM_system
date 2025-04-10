@@ -1,0 +1,25 @@
+{
+  "name": "crm_system",
+  "version": "1.0.0",
+  "description": "## Overview This is a **Customer Relationship Management (CRM)** web application built using **Google Cloud Platform (GCP)** and modern web technologies. It provides user and customer management features with secure authentication.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ArinKim/CRM_system.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ArinKim/CRM_system/issues"
+  },
+  "homepage": "https://github.com/ArinKim/CRM_system#readme",
+  "devDependencies": {
+    "cypress": "^14.3.0"
+  },
+  "dependencies": {
+    "typescript": "^5.8.3"
+  }
+}
