@@ -1,9 +1,9 @@
 import express from "express";
 const userRoute = express.Router();
 
-const firebaseAuthController = require("../controllers/firebase-auth-controller");
-const userInfoController = require("../controllers/user-info-controller");
-const authMiddleware = require("../middleware/auth-middleware");
+const firebaseAuthController = require("../controllers/firebase-auth");
+const userInfoController = require("../controllers/user-info");
+const authMiddleware = require("../middleware/auth");
 
 // Auth
 userRoute.post("/api/register", firebaseAuthController.registerUser);
@@ -14,17 +14,17 @@ userRoute.post("/api/reset-password", firebaseAuthController.resetPassword);
 // User Info
 userRoute.get(
   "/api/user/get-info/",
-  authMiddleware,
+  // authMiddleware,
   userInfoController.getAllInformation
 );
 userRoute.get(
   "/api/user/get-info/:uid",
-  authMiddleware,
+  // authMiddleware,
   userInfoController.getInformation
 );
 userRoute.post(
   "/api/user/update-info/:uid",
-  authMiddleware,
+  // authMiddleware,
 
   userInfoController.updateInformation
 );
@@ -33,4 +33,4 @@ userRoute.delete(
   userInfoController.deleteInformation
 );
 
-export {userRoute};
+export { userRoute };
