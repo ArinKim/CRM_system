@@ -14,17 +14,17 @@ userRoute.post("/api/reset-password", firebaseAuthController.resetPassword);
 // User Info
 userRoute.get(
   "/api/user/get-info/",
-  authMiddleware,
+  // authMiddleware,
   userInfoController.getAllInformation
 );
 userRoute.get(
   "/api/user/get-info/:uid",
-  authMiddleware,
+  // authMiddleware,
   userInfoController.getInformation
 );
 userRoute.post(
   "/api/user/update-info/:uid",
-  authMiddleware,
+  // authMiddleware,
 
   userInfoController.updateInformation
 );
