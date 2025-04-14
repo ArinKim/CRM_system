@@ -1,12 +1,9 @@
 import express from "express";
 import dotenv from "dotenv";
-import mongoose from "mongoose";
 import { userRoute } from "./routers/user";
-// import {customerRoute} from "./routers/customer";
 import cors from "cors";
 import helmet from "helmet";
 const app = express();
-import session from "express-session";
 import { salesRoute } from "./routers/sales";
 import { customerRoute } from "./routers/customer";
 

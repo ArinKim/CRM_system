@@ -1,8 +1,8 @@
 import express from "express";
 
-const firebaseAuthController = require("../controllers/firebase-auth-controller");
+const firebaseAuthController = require("../controllers/firebase-auth");
 const customerInfoController = require("../controllers/customer");
-const authMiddleware = require("../middleware/auth-middleware");
+const authMiddleware = require("../middleware/auth");
 
 const customerRoute = express.Router();
 

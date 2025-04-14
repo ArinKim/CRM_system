@@ -1,4 +1,4 @@
-import { admin } from "../util/admin";
+import { admin } from "../util/admin.js";
 import { createError } from "../error.js";
 
 const verifyToken = async (req, res, next) => {
