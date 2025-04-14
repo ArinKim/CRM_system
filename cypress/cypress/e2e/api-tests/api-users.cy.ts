@@ -29,3 +29,20 @@ context("GET /user/:uid", () => {
     });
   });
 });
+
+// TODO: Resolve Firebase Auth first up
+// context("POST /user/update-info/:uid", () => {
+//   it("updates a user", () => {
+//     var uid = cy.fixture("user.json").then((dataExtract) => {
+//       cy.log("dataExtract", dataExtract);
+//       var uid = dataExtract.uid;
+
+//       cy.request("POST", "http://localhost:3300/api/user/update-info/:uid", {
+//         username: "whatever",
+//       }).then((response) => {
+//         // response.body is automatically serialized into JSON
+//         expect(response.body).to.have.property("username", "whatever"); // true
+//       });
+//     });
+//   });
+// });
