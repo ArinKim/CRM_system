@@ -1,38 +1,41 @@
 import express from "express";
-
-const firebaseAuthController = require("../controllers/firebase-auth");
+import verifyToken from "../middleware/auth";
 const salesInfoController = require("../controllers/sales");
-const authMiddleware = require("../middleware/auth");
 
 const salesRoute = express.Router();
 
+// Get all sales
 salesRoute.get(
-  "/api/sales/get-info/",
-  // authMiddleware,
+  "/api/sales",
+  // verifyToken,
   salesInfoController.getAllInformation
 );
 
+// Get a specific sale by ID
 salesRoute.get(
-  "/api/sales/get-info/:id",
-  // authMiddleware,
+  "/api/sales/:id",
+  // verifyToken,
   salesInfoController.getInformation
 );
 
+// Create a new sale
 salesRoute.post(
-  "/api/sales/create-info/",
-  // authMiddleware,
+  "/api/sales",
+  // verifyToken,
   salesInfoController.createInformation
 );
 
-salesRoute.post(
-  "/api/sales/update-info/:id",
-  // authMiddleware,
+// Update a sale
+salesRoute.put(
+  "/api/sales/:id",
+  // verifyToken,
   salesInfoController.updateInformation
 );
 
+// Delete a sale
 salesRoute.delete(
-  "/api/sales/delete-info/:id",
-  // authMiddleware,
+  "/api/sales/:id",
+  // verifyToken,
   salesInfoController.deleteInformation
 );
 

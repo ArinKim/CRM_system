@@ -1,38 +1,41 @@
 import express from "express";
-
-const firebaseAuthController = require("../controllers/firebase-auth");
+import verifyToken from "../middleware/auth";
 const customerInfoController = require("../controllers/customer");
-const authMiddleware = require("../middleware/auth");
 
 const customerRoute = express.Router();
 
+// Get all customers
 customerRoute.get(
-  "/api/customer/get-info/",
-  // authMiddleware,
+  "/api/customers",
+  // verifyToken,
   customerInfoController.getAllInformation
 );
 
+// Get a specific customer by ID
 customerRoute.get(
-  "/api/customer/get-info/:id",
-  // authMiddleware,
+  "/api/customers/:id",
+  // verifyToken,
   customerInfoController.getInformation
 );
 
+// Create a new customer
 customerRoute.post(
-  "/api/customer/create-info/",
-  // authMiddleware,
+  "/api/customers",
+  // verifyToken,
   customerInfoController.createInformation
 );
 
-customerRoute.post(
-  "/api/customer/update-info/:id",
-  // authMiddleware,
+// Update a customer
+customerRoute.put(
+  "/api/customers/:id",
+  // verifyToken,
   customerInfoController.updateInformation
 );
 
+// Delete a customer
 customerRoute.delete(
-  "/api/customer/delete-info/:id",
-  // authMiddleware,
+  "/api/customers/:id",
+  // verifyToken,
   customerInfoController.deleteInformation
 );
 

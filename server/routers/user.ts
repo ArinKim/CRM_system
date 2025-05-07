@@ -1,35 +1,41 @@
 import express from "express";
-const userRoute = express.Router();
-
+import verifyToken from "../middleware/auth";
 const firebaseAuthController = require("../controllers/firebase-auth");
 const userInfoController = require("../controllers/user-info");
-const authMiddleware = require("../middleware/auth");
 
-// Auth
-userRoute.post("/api/register", firebaseAuthController.registerUser);
-userRoute.post("/api/login", firebaseAuthController.loginUser);
-userRoute.post("/api/logout", firebaseAuthController.logoutUser);
-userRoute.post("/api/reset-password", firebaseAuthController.resetPassword);
+const userRoute = express.Router();
 
-// User Info
+// Authentication routes
+userRoute.post("/api/auth/register", firebaseAuthController.registerUser);
+userRoute.post("/api/auth/login", firebaseAuthController.loginUser);
+userRoute.post("/api/auth/logout", firebaseAuthController.logoutUser);
+userRoute.post(
+  "/api/auth/reset-password",
+  firebaseAuthController.resetPassword
+);
+
+// User management routes
 userRoute.get(
-  "/api/user/get-info/",
-  // authMiddleware,
+  "/api/users",
+  // verifyToken,
   userInfoController.getAllInformation
 );
+
 userRoute.get(
-  "/api/user/get-info/:uid",
-  // authMiddleware,
+  "/api/users/:uid",
+  // verifyToken,
   userInfoController.getInformation
 );
-userRoute.post(
-  "/api/user/update-info/:uid",
-  // authMiddleware,
 
+userRoute.put(
+  "/api/users/:uid",
+  // verifyToken,
   userInfoController.updateInformation
 );
+
 userRoute.delete(
-  "/api/user/delete-info/:uid",
+  "/api/users/:uid",
+  // verifyToken,
   userInfoController.deleteInformation
 );
 

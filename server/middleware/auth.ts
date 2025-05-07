@@ -1,35 +1,77 @@
 import { admin } from "../util/admin.js";
 import { createError } from "../error.js";
+import { Request, Response, NextFunction } from "express";
 
-const verifyToken = async (req, res, next) => {
+interface DecodedIdToken {
+  uid: string;
+  email?: string;
+  [key: string]: any;
+}
+
+class AuthenticationError extends Error {
+  constructor(message: string, public statusCode: number = 401) {
+    super(message);
+    this.name = "AuthenticationError";
+  }
+}
+
+const verifyToken = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+): Promise<void> => {
   try {
-    console.log("Check whether request is with Firebase ID token");
+    console.log("[Auth] Verifying Firebase ID token");
     const authHeader = req.headers["authorization"];
 
-    if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      createError(
-        401,
-        "No Firebase ID token found in the Authorization header."
-      );
-      res.status(401).send("Missing necessary information");
-      return;
+    if (!authHeader) {
+      throw new AuthenticationError("Authorization header is missing");
     }
-    // Read the ID Token from the Authorization header.
+
+    if (!authHeader.startsWith("Bearer ")) {
+      throw new AuthenticationError(
+        "Authorization header must start with 'Bearer '"
+      );
+    }
+
     const idToken = authHeader.split("Bearer ")[1];
     if (!idToken) {
-      createError(401, "Malformed Authorization header.");
-      res.status(401).send("Malformed Data");
-      return;
+      throw new AuthenticationError(
+        "ID token is missing from Authorization header"
+      );
     }
-    const decodedIdToken = await admin.auth().verifyIdToken(idToken, true);
-    // console.log("Valid ID token", decodedIdToken);
-    // return decodedIdToken;
-    res.locals.user = decodedIdToken;
-    next();
+
+    try {
+      const decodedIdToken: DecodedIdToken = await admin
+        .auth()
+        .verifyIdToken(idToken, true);
+      console.log(
+        `[Auth] Successfully authenticated user: ${decodedIdToken.uid}`
+      );
+      res.locals.user = decodedIdToken;
+      next();
+    } catch (firebaseError) {
+      console.error(
+        "[Auth] Firebase token verification failed:",
+        firebaseError
+      );
+      throw new AuthenticationError("Invalid or expired ID token");
+    }
   } catch (error) {
-    createError(401, error);
-    res.status(401).json({ error: "Failed to authenticate." });
+    console.error("[Auth] Authentication error:", error);
+
+    if (error instanceof AuthenticationError) {
+      res.status(error.statusCode).json({
+        error: error.message,
+        status: error.statusCode,
+      });
+    } else {
+      res.status(500).json({
+        error: "Internal server error during authentication",
+        status: 500,
+      });
+    }
   }
 };
 
-module.exports = verifyToken;
+export default verifyToken;
