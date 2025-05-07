@@ -21,9 +21,12 @@ app.use((req, res, next) => {
   next();
 });
 app.use(express.json());
-app.use(userRoute);
-app.use(salesRoute);
-app.use(customerRoute);
+
+// API Version 1
+app.use("/api/v1", userRoute);
+app.use("/api/v1", salesRoute);
+app.use("/api/v1", customerRoute);
+
 app.get("/", (req, res) => {
   res.send("Hello from Express!");
 });

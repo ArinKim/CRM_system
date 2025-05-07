@@ -2,39 +2,44 @@
 
 This is a nodeJS based server for the CRM project.
 
-## Feature
+## Features
 
-## APi
+## API
 
-### User
+### Authentication (v1)
 
-| Method | URL                         | Description         |
-| ------ | --------------------------- | ------------------- |
-| POST   | `/api/register/`            | Register User       |
-| POST   | `/api/login/`               | Login User          |
-| POST   | `/api/logout/`              | Logout User         |
-| POST   | `/api/reset-password/`      | Reset Password      |
-| GET    | `/api/user/get-info/`       | Get a list of user  |
-| GET    | `/api/user/get-info/:id`    | Get a specific user |
-| PUT    | `/api/user/update-info/:id` | Update a user       |
-| DELETE | `/api/user/delete-info/:id` | Delete a user       |
+| Method | URL                           | Description    |
+| ------ | ----------------------------- | -------------- |
+| POST   | `/api/v1/auth/register`       | Register User  |
+| POST   | `/api/v1/auth/login`          | Login User     |
+| POST   | `/api/v1/auth/logout`         | Logout User    |
+| POST   | `/api/v1/auth/reset-password` | Reset Password |
 
-### Customer
+### Users (v1)
 
-| Method | URL                             | Description             |
-| ------ | ------------------------------- | ----------------------- |
-| GET    | `/api/customer/get-info/`       | Get a list of customer  |
-| GET    | `/api/customer/get-info/:id`    | Get a specific customer |
-| POST   | `/api/customer/create-info/`    | Add a new customer      |
-| PUT    | `/api/customer/update-info/:id` | Update a customer       |
-| DELETE | `/api/customer/delete-info/:id` | Delete a customer       |
+| Method | URL                  | Description         |
+| ------ | -------------------- | ------------------- |
+| GET    | `/api/v1/users`      | Get all users       |
+| GET    | `/api/v1/users/:uid` | Get a specific user |
+| PUT    | `/api/v1/users/:uid` | Update a user       |
+| DELETE | `/api/v1/users/:uid` | Delete a user       |
 
-### Sales
+### Customers (v1)
 
-| Method | URL                          | Description          |
-| ------ | ---------------------------- | -------------------- |
-| GET    | `/api/sales/get-info/`       | Get a list of sales  |
-| GET    | `/api/sales/get-info/:id`    | Get a specific sales |
-| POST   | `/api/sales/create-info/`    | Add a new sales      |
-| PUT    | `/api/sales/update-info/:id` | Update a sales       |
-| DELETE | `/api/sales/delete-info/:id` | Delete a sales       |
+| Method | URL                     | Description             |
+| ------ | ----------------------- | ----------------------- |
+| GET    | `/api/v1/customers`     | Get all customers       |
+| GET    | `/api/v1/customers/:id` | Get a specific customer |
+| POST   | `/api/v1/customers`     | Create a new customer   |
+| PUT    | `/api/v1/customers/:id` | Update a customer       |
+| DELETE | `/api/v1/customers/:id` | Delete a customer       |
+
+### Sales (v1)
+
+| Method | URL                 | Description         |
+| ------ | ------------------- | ------------------- |
+| GET    | `/api/v1/sales`     | Get all sales       |
+| GET    | `/api/v1/sales/:id` | Get a specific sale |
+| POST   | `/api/v1/sales`     | Create a new sale   |
+| PUT    | `/api/v1/sales/:id` | Update a sale       |
+| DELETE | `/api/v1/sales/:id` | Delete a sale       |
