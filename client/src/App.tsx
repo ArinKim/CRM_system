@@ -6,6 +6,7 @@ import { BrowserRouter, Routes, Route } from "react-router";
 import UserPage from "./pages/User/UserPage";
 import HomePage from "./pages/Home/HomePage";
 import FetchingTestPage from "./pages/FetchingTestPage";
+import CustomerPage from "./pages/Customer/CustomerPage";
 // import SideDrawer from "./components/Drawer/SideDrawer";
 
 function App() {
@@ -16,8 +17,9 @@ function App() {
           <TopAppBar />
           <Routes>
             <Route path="/" element={<HomePage />} />
-            <Route path="/user" element={<UserPage />} />
+            <Route path="/users" element={<UserPage />} />
             <Route path="/items" element={<ItemsPage />} />
+            <Route path="/customers" element={<CustomerPage />} />
             <Route path="/fetching-test" element={<FetchingTestPage />} />
           </Routes>
         </div>

@@ -173,6 +173,11 @@ export default function SideDrawer() {
               text: "Customers",
               path: "/customers",
             },
+            {
+              icon: <SupervisorAccountIcon />,
+              text: "Users",
+              path: "/users",
+            },
             { icon: <SettingsIcon />, text: "Settings", path: "/settings" },
           ].map((item, index) => (
             <ListItem key={item.text} disablePadding>
