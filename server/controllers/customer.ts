@@ -41,7 +41,7 @@ class CustomerInfoController {
 
       const data = new Customer({
         id: id,
-        ...req.body, // TODO: Ensure 'status' is boolean value from this body
+        ...req.body,
       }).toJson();
 
       console.log(req.body);
@@ -57,7 +57,22 @@ class CustomerInfoController {
   }
 
   async updateInformation(req, res, next) {
-    return res.status(200).json({ message: "Update information" });
+    try {
+      const { id } = req.params;
+      // const { data } = req.body;
+      // console.log(id, req);
+      const data = new Customer({
+        id: id,
+        ...req.body,
+      }).toJson();
+      console.log(data);
+
+      await db.collection("customers").doc(id).update(data);
+      return res.status(200).json({ message: "Update information" });
+    } catch (error) {
+      console.error("Error updating customer information:", error);
+      return res.status(500).json(error);
+    }
   }
 
   async deleteInformation(req, res, next) {

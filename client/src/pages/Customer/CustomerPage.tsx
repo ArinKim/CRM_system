@@ -25,18 +25,31 @@ import {
   Add as AddIcon,
 } from "@mui/icons-material";
 import axios from "axios";
+import { Timestamp } from "firebase/firestore";
 
 interface Customer {
   id: string;
   name: string;
+  service?: string;
   email: string;
   phone?: string;
-  company?: string;
   status: "active" | "inactive";
   type: "individual" | "business";
-  createdAt?: string;
-  lastContact?: string;
+  createdAt?: {
+    _seconds: number;
+    _nanoseconds: number;
+  };
+  updatedAt?: {
+    _seconds: number;
+    _nanoseconds: number;
+  };
+  lastContact?: {
+    _seconds: number;
+    _nanoseconds: number;
+  };
 }
+
+var baseUrl = "http://localhost:3300";
 
 function CustomerPage() {
   const [customers, setCustomers] = useState<Customer[]>([]);
@@ -46,11 +59,14 @@ function CustomerPage() {
   );
   const [formData, setFormData] = useState({
     name: "",
+    service: "",
     email: "",
     phone: "",
-    company: "",
     status: "active",
     type: "individual",
+    lastContact: "1900-01-01",
+    createdAt: "1900-01-01",
+    updatedAt: "1900-01-01",
   });
 
   useEffect(() => {
@@ -59,7 +75,7 @@ function CustomerPage() {
 
   const fetchCustomers = async () => {
     try {
-      const response = await axios.get("/api/v1/customers");
+      const response = await axios.get(`${baseUrl}/api/v1/customers`);
       setCustomers(response.data);
     } catch (error) {
       console.error("Error fetching customers:", error);
@@ -73,9 +89,24 @@ function CustomerPage() {
         name: customer.name,
         email: customer.email,
         phone: customer.phone || "",
-        company: customer.company || "",
+        service: customer.service || "",
         status: customer.status,
         type: customer.type,
+        lastContact: customer.lastContact?._seconds
+          ? new Date(customer.lastContact._seconds * 1000).toLocaleDateString(
+              "en-CA"
+            )
+          : "1900-01-01",
+        createdAt: customer.createdAt?._seconds
+          ? new Date(customer.createdAt._seconds * 1000).toLocaleDateString(
+              "en-CA"
+            )
+          : "1900-01-01",
+        updatedAt: customer.updatedAt?._seconds
+          ? new Date(customer.updatedAt._seconds * 1000).toLocaleDateString(
+              "en-CA"
+            )
+          : "1900-01-01",
       });
     } else {
       setSelectedCustomer(null);
@@ -83,9 +114,12 @@ function CustomerPage() {
         name: "",
         email: "",
         phone: "",
-        company: "",
+        service: "",
         status: "active",
         type: "individual",
+        lastContact: "1900-01-01",
+        createdAt: "1900-01-01",
+        updatedAt: "1900-01-01",
       });
     }
     setOpenDialog(true);
@@ -98,18 +132,27 @@ function CustomerPage() {
       name: "",
       email: "",
       phone: "",
-      company: "",
+      service: "",
       status: "active",
       type: "individual",
+      lastContact: "1900-01-01",
+      createdAt: "1900-01-01",
+      updatedAt: "1900-01-01",
     });
   };
 
   const handleSubmit = async () => {
     try {
       if (selectedCustomer) {
-        await axios.put(`/api/v1/customers/${selectedCustomer.id}`, formData);
+        // console.log(`${baseUrl}/api/v1/customers/${selectedCustomer.id}`);
+        // console.log(formData);
+        await axios.put(
+          `${baseUrl}/api/v1/customers/${selectedCustomer.id}`,
+          formData
+        );
+        console.log("Customer updated successfully");
       } else {
-        await axios.post("/api/v1/customers", formData);
+        await axios.post(`${baseUrl}/api/v1/customers`, formData);
       }
       fetchCustomers();
       handleCloseDialog();
@@ -121,13 +164,27 @@ function CustomerPage() {
   const handleDelete = async (id: string) => {
     if (window.confirm("Are you sure you want to delete this customer?")) {
       try {
-        await axios.delete(`/api/v1/customers/${id}`);
+        await axios.delete(`${baseUrl}/api/v1/customers/${id}`);
         fetchCustomers();
       } catch (error) {
         console.error("Error deleting customer:", error);
       }
     }
   };
+
+  // DEBUGGING
+  // function convertTimestampToDate(timestamp: Timestamp): Date {
+  //   return timestamp.toDate();
+  // }
+  // console.log(
+  //   customers.map((customer) => {
+  //     if (customer.lastContact?._seconds) {
+  //       const timestamp = new Timestamp(customer.lastContact._seconds, 0);
+  //       return convertTimestampToDate(timestamp);
+  //     }
+  //     return null;
+  //   })
+  // );
 
   return (
     <Container maxWidth="lg" sx={{ mt: 4, mb: 4 }}>
@@ -148,12 +205,16 @@ function CustomerPage() {
         <Table>
           <TableHead>
             <TableRow>
+              {/* <TableCell>Id</TableCell> */}
               <TableCell>Name</TableCell>
-              <TableCell>Company</TableCell>
-              <TableCell>Contact</TableCell>
+              <TableCell>Service</TableCell>
+              <TableCell>Email</TableCell>
+              {/* <TableCell>Phone</TableCell> */}
               <TableCell>Type</TableCell>
               <TableCell>Status</TableCell>
               <TableCell>Last Contact</TableCell>
+              <TableCell>Created At</TableCell>
+              <TableCell>Updated At</TableCell>
               <TableCell align="right">Actions</TableCell>
             </TableRow>
           </TableHead>
@@ -161,7 +222,7 @@ function CustomerPage() {
             {customers.map((customer) => (
               <TableRow key={customer.id}>
                 <TableCell>{customer.name}</TableCell>
-                <TableCell>{customer.company || "N/A"}</TableCell>
+                <TableCell>{customer.service || "N/A"}</TableCell>
                 <TableCell>
                   <Box>
                     <Typography variant="body2">{customer.email}</Typography>
@@ -187,8 +248,24 @@ function CustomerPage() {
                   />
                 </TableCell>
                 <TableCell>
-                  {customer.lastContact
-                    ? new Date(customer.lastContact).toLocaleDateString()
+                  {customer.lastContact?._seconds
+                    ? new Date(
+                        customer.lastContact._seconds * 1000
+                      ).toLocaleDateString("en-CA")
+                    : "Never"}
+                </TableCell>
+                <TableCell>
+                  {customer.createdAt?._seconds
+                    ? new Date(
+                        customer.createdAt._seconds * 1000
+                      ).toLocaleDateString("en-CA")
+                    : "Never"}
+                </TableCell>
+                <TableCell>
+                  {customer.updatedAt?._seconds
+                    ? new Date(
+                        customer.updatedAt._seconds * 1000
+                      ).toLocaleDateString("en-CA")
                     : "Never"}
                 </TableCell>
                 <TableCell align="right">
@@ -252,10 +329,10 @@ function CustomerPage() {
             />
             <TextField
               fullWidth
-              label="Company"
-              value={formData.company}
+              label="Service"
+              value={formData.service}
               onChange={(e) =>
-                setFormData({ ...formData, company: e.target.value })
+                setFormData({ ...formData, service: e.target.value })
               }
               sx={{ mb: 2 }}
             />
@@ -282,10 +359,44 @@ function CustomerPage() {
               }
               select
               SelectProps={{ native: true }}
+              sx={{ mb: 2 }}
             >
               <option value="active">Active</option>
               <option value="inactive">Inactive</option>
             </TextField>
+            <TextField
+              fullWidth
+              label="Last Contact"
+              type="date"
+              value={formData.lastContact}
+              onChange={(e) =>
+                setFormData({ ...formData, lastContact: e.target.value })
+              }
+              InputLabelProps={{ shrink: true }}
+              sx={{ mb: 2 }}
+            />
+            <TextField
+              fullWidth
+              label="Created At"
+              type="date"
+              value={formData.createdAt}
+              onChange={(e) =>
+                setFormData({ ...formData, createdAt: e.target.value })
+              }
+              InputLabelProps={{ shrink: true }}
+              sx={{ mb: 2 }}
+            />
+            <TextField
+              fullWidth
+              label="Updated At"
+              type="date"
+              value={formData.updatedAt}
+              onChange={(e) =>
+                setFormData({ ...formData, updatedAt: e.target.value })
+              }
+              InputLabelProps={{ shrink: true }}
+              sx={{ mb: 2 }}
+            />
           </Box>
         </DialogContent>
         <DialogActions>

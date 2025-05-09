@@ -2,22 +2,25 @@ import { CustomerInterface } from "./customer.interface";
 
 export class Customer {
   public id: string;
-  public company: string;
+  public name: string;
   public service: string;
   public email: string;
   public phone: string;
-  public status: boolean = false;
+  public status: string = "active";
+  public type: string = "individual";
   public createdAt: Date = new Date();
   public updatedAt: Date = new Date();
+  public lastContact: Date = new Date("1900-01-01");
 
   constructor(initializer?: any) {
     if (!initializer) return;
     if (initializer.id) this.id = initializer.id;
-    if (initializer.company) this.company = initializer.company;
+    if (initializer.name) this.name = initializer.name;
     if (initializer.service) this.service = initializer.service;
     if (initializer.email) this.email = initializer.email;
     if (initializer.phone) this.phone = initializer.phone;
     if (initializer.status !== undefined) this.status = initializer.status;
+    if (initializer.type !== undefined) this.type = initializer.type;
     if (initializer.createdAt) this.createdAt = new Date(initializer.createdAt);
     if (initializer.updatedAt) this.updatedAt = new Date(initializer.updatedAt);
   }
@@ -33,34 +36,38 @@ export class Customer {
   public static getKeyList(): string[] {
     return [
       "id",
-      "company",
+      "name",
       "service",
       "email",
       "phone",
       "status",
+      "type",
       "createdAt",
       "updatedAt",
+      "lastContact",
     ];
   }
 
   public toString(): string {
-    return `Customer: ${this.id} ${this.company} ${this.service} ${this.email} ${this.phone} ${this.status} ${this.createdAt} ${this.updatedAt}`;
+    return `Customer: ${this.id} ${this.name} ${this.service} ${this.email} ${this.phone} ${this.status} ${this.type} ${this.createdAt} ${this.updatedAt} ${this.lastContact}`;
   }
 
   public isEmpty(): boolean {
-    return !this.company && !this.service && !this.email && !this.phone;
+    return !this.name && !this.service && !this.email && !this.phone;
   }
 
   public toJson(): CustomerInterface {
     return {
       id: this.id,
-      company: this.company,
+      name: this.name,
       service: this.service,
       email: this.email,
       phone: this.phone,
-      status: this.status,
+      status: this.status as "active" | "inactive",
+      type: this.type as "individual" | "business",
       createdAt: this.createdAt,
       updatedAt: this.updatedAt,
+      lastContact: this.lastContact,
     };
   }
 }

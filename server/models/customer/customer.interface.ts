@@ -1,10 +1,12 @@
 export interface CustomerInterface {
   id: string;
-  company: string;
+  name: string;
   service?: string;
   email: string;
   phone?: string;
-  status?: boolean;
+  status: "active" | "inactive";
+  type: "individual" | "business";
   createdAt?: Date;
   updatedAt?: Date;
+  lastContact?: Date;
 }
