@@ -44,7 +44,7 @@ class CustomerInfoController {
         ...req.body,
       }).toJson();
 
-      console.log(req.body);
+      // console.log(req.body);
 
       await db.collection("customers").doc(id).set(data);
       return res
@@ -65,7 +65,7 @@ class CustomerInfoController {
         id: id,
         ...req.body,
       }).toJson();
-      console.log(data);
+      // console.log(data);
 
       await db.collection("customers").doc(id).update(data);
       return res.status(200).json({ message: "Update information" });

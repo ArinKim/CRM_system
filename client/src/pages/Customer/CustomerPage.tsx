@@ -117,9 +117,9 @@ function CustomerPage() {
         service: "",
         status: "active",
         type: "individual",
-        lastContact: "1900-01-01",
-        createdAt: "1900-01-01",
-        updatedAt: "1900-01-01",
+        lastContact: new Date().toLocaleDateString("en-CA"),
+        createdAt: new Date().toLocaleDateString("en-CA"),
+        updatedAt: new Date().toLocaleDateString("en-CA"),
       });
     }
     setOpenDialog(true);
@@ -145,7 +145,7 @@ function CustomerPage() {
     try {
       if (selectedCustomer) {
         // console.log(`${baseUrl}/api/v1/customers/${selectedCustomer.id}`);
-        // console.log(formData);
+        console.log(formData);
         await axios.put(
           `${baseUrl}/api/v1/customers/${selectedCustomer.id}`,
           formData
@@ -369,9 +369,9 @@ function CustomerPage() {
               label="Last Contact"
               type="date"
               value={formData.lastContact}
-              onChange={(e) =>
-                setFormData({ ...formData, lastContact: e.target.value })
-              }
+              onChange={(e) => {
+                setFormData({ ...formData, lastContact: e.target.value });
+              }}
               InputLabelProps={{ shrink: true }}
               sx={{ mb: 2 }}
             />

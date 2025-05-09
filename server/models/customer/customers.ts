@@ -23,6 +23,8 @@ export class Customer {
     if (initializer.type !== undefined) this.type = initializer.type;
     if (initializer.createdAt) this.createdAt = new Date(initializer.createdAt);
     if (initializer.updatedAt) this.updatedAt = new Date(initializer.updatedAt);
+    if (initializer.lastContact)
+      this.lastContact = new Date(initializer.lastContact);
   }
 
   public static fromJson(value: CustomerInterface): Customer {
