@@ -167,6 +167,11 @@ export default function SideDrawer() {
               text: "Items",
               path: "/items",
             },
+            {
+              icon: <InventoryIcon />,
+              text: "Meetings",
+              path: "/meetings",
+            },
             { icon: <BorderColorIcon />, text: "Orders", path: "/orders" },
             {
               icon: <SupervisorAccountIcon />,

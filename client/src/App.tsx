@@ -8,6 +8,7 @@ import HomePage from "./pages/Home/HomePage";
 import FetchingTestPage from "./pages/FetchingTestPage";
 import CustomerPage from "./pages/Customer/CustomerPage";
 // import SideDrawer from "./components/Drawer/SideDrawer";
+import MeetingPage from "./pages/Meeting/MeetingPage";
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
             <Route path="/items" element={<ItemsPage />} />
             <Route path="/customers" element={<CustomerPage />} />
             <Route path="/fetching-test" element={<FetchingTestPage />} />
+            <Route path="/meetings" element={<MeetingPage />} />
           </Routes>
         </div>
       </>
