@@ -15,25 +15,25 @@ userRoute.post("/auth/reset-password", firebaseAuthController.resetPassword);
 userRoute.get(
   "/users",
   // verifyToken,
-  userInfoController.getAllInformation
+  userInfoController.getAllUser
 );
 
 userRoute.get(
   "/users/:uid",
   // verifyToken,
-  userInfoController.getInformation
+  userInfoController.getUser
 );
 
 userRoute.put(
   "/users/:uid",
   // verifyToken,
-  userInfoController.updateInformation
+  userInfoController.updateUser
 );
 
 userRoute.delete(
   "/users/:uid",
   // verifyToken,
-  userInfoController.deleteInformation
+  userInfoController.deleteUser
 );
 
 export { userRoute };

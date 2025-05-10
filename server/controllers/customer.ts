@@ -11,7 +11,7 @@ import { v4 as uuidv4 } from "uuid";
 const db = getFirestore();
 
 class CustomerInfoController {
-  async getAllInformation(req, res, next) {
+  async getAllCustomer(req, res, next) {
     try {
       const usersRef = db.collection("customers");
 
@@ -30,11 +30,11 @@ class CustomerInfoController {
     }
   }
 
-  async getInformation(req, res, next) {
-    return res.status(200).json({ message: "Get information" });
+  async getCustomer(req, res, next) {
+    return res.status(200).json({ message: "Get Customer" });
   }
 
-  async createInformation(req, res, next) {
+  async createCustomer(req, res, next) {
     try {
       // const { customer } = req.body;
       const id = uuidv4();
@@ -49,14 +49,14 @@ class CustomerInfoController {
       await db.collection("customers").doc(id).set(data);
       return res
         .status(200)
-        .json({ message: "Create customer information", id: id });
+        .json({ message: "Create customer Customer", id: id });
     } catch (error) {
-      console.error("Error creating customer information:", error);
+      console.error("Error creating customer Customer:", error);
       return res.status(500).json(error);
     }
   }
 
-  async updateInformation(req, res, next) {
+  async updateCustomer(req, res, next) {
     try {
       const { id } = req.params;
       // const { data } = req.body;
@@ -68,14 +68,14 @@ class CustomerInfoController {
       // console.log(data);
 
       await db.collection("customers").doc(id).update(data);
-      return res.status(200).json({ message: "Update information" });
+      return res.status(200).json({ message: "Update Customer" });
     } catch (error) {
-      console.error("Error updating customer information:", error);
+      console.error("Error updating customer Customer:", error);
       return res.status(500).json(error);
     }
   }
 
-  async deleteInformation(req, res, next) {
+  async deleteCustomer(req, res, next) {
     try {
       const { id } = req.params;
       await db.collection("customers").doc(id).delete();

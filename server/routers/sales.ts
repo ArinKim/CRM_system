@@ -8,35 +8,35 @@ const salesRoute = express.Router();
 salesRoute.get(
   "/sales",
   // verifyToken,
-  salesInfoController.getAllInformation
+  salesInfoController.getAllSales
 );
 
 // Get a specific sale by ID
 salesRoute.get(
   "/sales/:id",
   // verifyToken,
-  salesInfoController.getInformation
+  salesInfoController.getSales
 );
 
 // Create a new sale
 salesRoute.post(
   "/sales",
   // verifyToken,
-  salesInfoController.createInformation
+  salesInfoController.createSales
 );
 
 // Update a sale
 salesRoute.put(
   "/sales/:id",
   // verifyToken,
-  salesInfoController.updateInformation
+  salesInfoController.updateSales
 );
 
 // Delete a sale
 salesRoute.delete(
   "/sales/:id",
   // verifyToken,
-  salesInfoController.deleteInformation
+  salesInfoController.deleteSales
 );
 
 export { salesRoute };

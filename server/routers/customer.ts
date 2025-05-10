@@ -8,35 +8,35 @@ const customerRoute = express.Router();
 customerRoute.get(
   "/customers",
   // verifyToken,
-  customerInfoController.getAllInformation
+  customerInfoController.getAllCustomer
 );
 
 // Get a specific customer by ID
 customerRoute.get(
   "/customers/:id",
   // verifyToken,
-  customerInfoController.getInformation
+  customerInfoController.getCustomer
 );
 
 // Create a new customer
 customerRoute.post(
   "/customers",
   // verifyToken,
-  customerInfoController.createInformation
+  customerInfoController.createCustomer
 );
 
 // Update a customer
 customerRoute.put(
   "/customers/:id",
   // verifyToken,
-  customerInfoController.updateInformation
+  customerInfoController.updateCustomer
 );
 
 // Delete a customer
 customerRoute.delete(
   "/customers/:id",
   // verifyToken,
-  customerInfoController.deleteInformation
+  customerInfoController.deleteCustomer
 );
 
 export { customerRoute };

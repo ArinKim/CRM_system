@@ -13,7 +13,7 @@ import { v4 as uuidv4 } from "uuid";
 const db = getFirestore();
 
 class SalesInfoController {
-  async getAllInformation(req, res, next) {
+  async getAllSales(req, res, next) {
     try {
       const salesRef = db.collection("sales");
 
@@ -29,7 +29,7 @@ class SalesInfoController {
     }
   }
 
-  async getInformation(req, res, next) {
+  async getSales(req, res, next) {
     try {
       const salesRef = db.collection("sales").doc(req.params.id);
       const doc = await salesRef.get();
@@ -44,7 +44,7 @@ class SalesInfoController {
     }
   }
 
-  async createInformation(req, res, next) {
+  async createSales(req, res, next) {
     try {
       const { customer, value } = req.body;
       const id = uuidv4();
@@ -59,13 +59,13 @@ class SalesInfoController {
       }).toJson();
 
       await db.collection("sales").doc(id).set(sales);
-      return res.status(200).json({ message: "Create information", id: id });
+      return res.status(200).json({ message: "Create sales", id: id });
     } catch (error) {
       return res.status(500).json(error);
     }
   }
 
-  async updateInformation(req, res, next) {
+  async updateSales(req, res, next) {
     try {
       const { customer, value } = req.body;
       const id = req.params.id;
@@ -77,15 +77,15 @@ class SalesInfoController {
 
       console.log(sales);
       await db.collection("sales").doc(id).set(sales, { merge: true });
-      return res.status(200).json({ message: "Update information" });
+      return res.status(200).json({ message: "Update sales" });
     } catch (error) {
       console.log(error);
       return res.status(500).json(error);
     }
   }
 
-  async deleteInformation(req, res, next) {
-    return res.status(200).json({ message: "Delete information" });
+  async deleteSales(req, res, next) {
+    return res.status(200).json({ message: "Delete sales" });
   }
 }
 

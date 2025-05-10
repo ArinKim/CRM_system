@@ -13,7 +13,7 @@ import {
 } from "../util/firebase";
 
 class userInfoController {
-  async getAllInformation(req, res, next) {
+  async getAllUser(req, res, next) {
     try {
       const usersRef = db.collection("users");
 
@@ -32,7 +32,7 @@ class userInfoController {
     }
   }
 
-  async getInformation(req, res, next) {
+  async getUser(req, res, next) {
     try {
       const usersRef = db.collection("users").doc(req.params.uid);
       const doc = await usersRef.get();
@@ -49,7 +49,7 @@ class userInfoController {
     }
   }
 
-  async updateInformation(req, res, next) {
+  async updateUser(req, res, next) {
     try {
       const currentUser = res.locals.user;
       const newUser = new User(req.body);
@@ -66,7 +66,7 @@ class userInfoController {
     }
   }
 
-  async deleteInformation(req, res, next) {
+  async deleteUser(req, res, next) {
     return res
       .status(500)
       .json({ general: "Something went wrong, please try again :)" });
