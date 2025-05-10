@@ -1,5 +1,5 @@
 import { createError } from "../error";
-import { User } from "../models/user/users";
+import { User } from "../models/user/user";
 import { db } from "../util/admin";
 
 import {

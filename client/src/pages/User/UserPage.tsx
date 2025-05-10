@@ -26,15 +26,9 @@ import {
   Add as AddIcon,
 } from "@mui/icons-material";
 import axios from "axios";
+import { User } from "../../models/user/user";
 
-interface User {
-  uid: string;
-  email: string;
-  displayName?: string;
-  role?: string;
-  createdAt?: string;
-  lastLogin?: string;
-}
+var baseUrl = "http://localhost:3300";
 
 function UserPage() {
   const [users, setUsers] = useState<User[]>([]);
@@ -42,7 +36,7 @@ function UserPage() {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [formData, setFormData] = useState({
     email: "",
-    displayName: "",
+    username: "",
     role: "",
   });
 
@@ -52,7 +46,7 @@ function UserPage() {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("/api/v1/users");
+      const response = await axios.get(`${baseUrl}/api/v1/users`);
       setUsers(response.data);
     } catch (error) {
       console.error("Error fetching users:", error);
@@ -64,12 +58,12 @@ function UserPage() {
       setSelectedUser(user);
       setFormData({
         email: user.email,
-        displayName: user.displayName || "",
+        username: user.username || "",
         role: user.role || "",
       });
     } else {
       setSelectedUser(null);
-      setFormData({ email: "", displayName: "", role: "" });
+      setFormData({ email: "", username: "", role: "" });
     }
     setOpenDialog(true);
   };
@@ -77,15 +71,18 @@ function UserPage() {
   const handleCloseDialog = () => {
     setOpenDialog(false);
     setSelectedUser(null);
-    setFormData({ email: "", displayName: "", role: "" });
+    setFormData({ email: "", username: "", role: "" });
   };
 
   const handleSubmit = async () => {
     try {
       if (selectedUser) {
-        await axios.put(`/api/v1/users/${selectedUser.uid}`, formData);
+        await axios.put(
+          `${baseUrl}/api/v1/users/${selectedUser.uid}`,
+          formData
+        );
       } else {
-        await axios.post("/api/v1/users", formData);
+        await axios.post(`${baseUrl}/api/v1/users`, formData);
       }
       fetchUsers();
       handleCloseDialog();
@@ -97,7 +94,7 @@ function UserPage() {
   const handleDelete = async (uid: string) => {
     if (window.confirm("Are you sure you want to delete this user?")) {
       try {
-        await axios.delete(`/api/v1/users/${uid}`);
+        await axios.delete(`${baseUrl}/api/v1/users/${uid}`);
         fetchUsers();
       } catch (error) {
         console.error("Error deleting user:", error);
@@ -134,7 +131,7 @@ function UserPage() {
           <TableBody>
             {users.map((user) => (
               <TableRow key={user.uid}>
-                <TableCell>{user.displayName || "N/A"}</TableCell>
+                <TableCell>{user.username || "N/A"}</TableCell>
                 <TableCell>{user.email}</TableCell>
                 <TableCell>
                   <Chip
@@ -188,10 +185,10 @@ function UserPage() {
             />
             <TextField
               fullWidth
-              label="Display Name"
-              value={formData.displayName}
+              label="Username"
+              value={formData.username}
               onChange={(e) =>
-                setFormData({ ...formData, displayName: e.target.value })
+                setFormData({ ...formData, username: e.target.value })
               }
               sx={{ mb: 2 }}
             />
