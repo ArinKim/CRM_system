@@ -76,8 +76,15 @@ class CustomerInfoController {
   }
 
   async deleteInformation(req, res, next) {
-    return res.status(200).json({ message: "Delete information" });
+    try {
+      const { id } = req.params;
+      await db.collection("customers").doc(id).delete();
+      return res.status(200).json({ message: "Customer deleted successfully" });
+    } catch (error) {
+      console.error("Error deleting customer:", error);
+      return res.status(500).json(error);
+    }
   }
 }
 
-module.exports = new CustomerInfoController();
+export default new CustomerInfoController();

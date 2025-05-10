@@ -165,6 +165,7 @@ function CustomerPage() {
     if (window.confirm("Are you sure you want to delete this customer?")) {
       try {
         await axios.delete(`${baseUrl}/api/v1/customers/${id}`);
+        console.log("Customer deleted successfully");
         fetchCustomers();
       } catch (error) {
         console.error("Error deleting customer:", error);

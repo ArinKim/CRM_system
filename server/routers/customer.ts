@@ -1,6 +1,6 @@
 import express from "express";
 import verifyToken from "../middleware/auth";
-const customerInfoController = require("../controllers/customer");
+import customerInfoController from "../controllers/customer";
 
 const customerRoute = express.Router();
 
