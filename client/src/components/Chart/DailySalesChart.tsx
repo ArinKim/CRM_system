@@ -62,7 +62,7 @@ function DailySalesChart() {
         chartType="PieChart"
         data={[
           ["Customers", "AUD"],
-          ...sales.map((item) => [item.customer.company, item.value.amount]),
+          ...sales.map((item) => [item.customer.name, item.value.amount]),
         ]}
         options={options}
         width="auto"

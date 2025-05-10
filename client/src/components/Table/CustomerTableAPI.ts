@@ -6,7 +6,7 @@ import {
 } from "../../utils/helpers";
 
 const baseUrl = "http://localhost:3300";
-const url = `${baseUrl}/api/customer/get-info/`;
+const url = `${baseUrl}/api/v1/customers`;
 
 function convertToCustomertModels(data: any[]): Customer[] {
   let customer: Customer[] = data.map(convertToCustomertModel);
