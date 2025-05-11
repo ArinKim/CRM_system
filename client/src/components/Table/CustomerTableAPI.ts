@@ -1,4 +1,4 @@
-import { Customer } from "../../models/customer/customers";
+import { Customer } from "../../models/customer/customer";
 import {
   parseJSON,
   checkStatus,

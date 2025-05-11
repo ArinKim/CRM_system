@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { DataGrid, GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
-import { Customer } from "../../models/customer/customers";
+import { Customer } from "../../models/customer/customer";
 import Button from "@mui/material/Button";
 import { CustomerTableAPI } from "./CustomerTableAPI";
 
