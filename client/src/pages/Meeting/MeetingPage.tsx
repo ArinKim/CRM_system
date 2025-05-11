@@ -81,7 +81,6 @@ function MeetingPage() {
   const fetchStaff = async () => {
     try {
       const response = await axios.get(`${baseUrl}/api/v1/users/role/staff`);
-      console.log(response.data);
       setUsers(response.data);
     } catch (error) {
       console.error("Error fetching staff:", error);
@@ -276,13 +275,17 @@ function MeetingPage() {
                 <TextField {...params} label="Customers" sx={{ mb: 2 }} />
               )}
               renderTags={(value, getTagProps) =>
-                value.map((option, index) => (
-                  <Chip
-                    variant="outlined"
-                    label={option.name}
-                    {...getTagProps({ index })}
-                  />
-                ))
+                value.map((option, index) => {
+                  const { key, ...chipProps } = getTagProps({ index });
+                  return (
+                    <Chip
+                      key={key}
+                      variant="outlined"
+                      label={option.name}
+                      {...chipProps}
+                    />
+                  );
+                })
               }
             />
             <Autocomplete
@@ -298,13 +301,17 @@ function MeetingPage() {
                 <TextField {...params} label="Staff" sx={{ mb: 2 }} />
               )}
               renderTags={(value, getTagProps) =>
-                value.map((option, index) => (
-                  <Chip
-                    variant="outlined"
-                    label={option.name}
-                    {...getTagProps({ index })}
-                  />
-                ))
+                value.map((option, index) => {
+                  const { key, ...chipProps } = getTagProps({ index });
+                  return (
+                    <Chip
+                      key={key}
+                      variant="outlined"
+                      label={option.name}
+                      {...chipProps}
+                    />
+                  );
+                })
               }
             />
             <LocalizationProvider dateAdapter={AdapterDateFns}>

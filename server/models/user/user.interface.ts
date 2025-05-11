@@ -1,6 +1,6 @@
 export interface UserInterface {
   uid: string;
-  username: string;
+  name: string;
   role?: string;
   email: string;
   country?: string;
