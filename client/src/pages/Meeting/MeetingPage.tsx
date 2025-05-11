@@ -14,9 +14,9 @@ import {
   List,
   ListItem,
   ListItemText,
-  ListItemSecondaryAction,
   IconButton,
   Chip,
+  Autocomplete,
 } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { TimePicker } from "@mui/x-date-pickers/TimePicker";
@@ -39,12 +39,14 @@ function MeetingPage() {
   const [meetings, setMeetings] = useState<Meeting[]>([]);
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [users, setUsers] = useState<User[]>([]);
+  const [selectedUsers, setSelectedUsers] = useState<User[]>([]);
+  const [selectedCustomers, setSelectedCustomers] = useState<Customer[]>([]);
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedMeeting, setSelectedMeeting] = useState<Meeting | null>(null);
   const [formData, setFormData] = useState({
     title: "",
-    customerId: "",
-    userId: "",
+    customerId: selectedCustomers,
+    userId: selectedUsers,
     date: new Date(),
     startTime: new Date(),
     endTime: new Date(),
@@ -78,7 +80,8 @@ function MeetingPage() {
 
   const fetchStaff = async () => {
     try {
-      const response = await axios.get(`${baseUrl}/api/v1/users`);
+      const response = await axios.get(`${baseUrl}/api/v1/users/role/staff`);
+      console.log(response.data);
       setUsers(response.data);
     } catch (error) {
       console.error("Error fetching staff:", error);
@@ -90,8 +93,8 @@ function MeetingPage() {
       setSelectedMeeting(meeting);
       setFormData({
         title: meeting.title,
-        customerId: meeting.customerId,
-        userId: meeting.userId,
+        customerId: selectedCustomers,
+        userId: selectedUsers,
         date: new Date(meeting.date),
         startTime: new Date(meeting.startTime),
         endTime: new Date(meeting.endTime),
@@ -102,8 +105,8 @@ function MeetingPage() {
       setSelectedMeeting(null);
       setFormData({
         title: "",
-        customerId: "",
-        userId: "",
+        customerId: selectedCustomers,
+        userId: selectedUsers,
         date: new Date(),
         startTime: new Date(),
         endTime: new Date(),
@@ -183,7 +186,34 @@ function MeetingPage() {
             </Typography>
             <List>
               {meetings.map((meeting) => (
-                <ListItem key={meeting.id} divider>
+                <ListItem
+                  key={meeting.id}
+                  divider
+                  secondaryAction={
+                    <>
+                      <Chip
+                        label={meeting.status}
+                        color={getStatusColor(meeting.status)}
+                        size="small"
+                        sx={{ mr: 1 }}
+                      />
+                      <IconButton
+                        edge="end"
+                        color="primary"
+                        onClick={() => handleOpenDialog(meeting)}
+                      >
+                        <EditIcon />
+                      </IconButton>
+                      <IconButton
+                        edge="end"
+                        color="error"
+                        onClick={() => handleDelete(meeting.id)}
+                      >
+                        <DeleteIcon />
+                      </IconButton>
+                    </>
+                  }
+                >
                   <ListItemText
                     primary={meeting.title}
                     secondary={
@@ -206,28 +236,6 @@ function MeetingPage() {
                       </>
                     }
                   />
-                  <ListItemSecondaryAction>
-                    <Chip
-                      label={meeting.status}
-                      color={getStatusColor(meeting.status)}
-                      size="small"
-                      sx={{ mr: 1 }}
-                    />
-                    <IconButton
-                      edge="end"
-                      color="primary"
-                      onClick={() => handleOpenDialog(meeting)}
-                    >
-                      <EditIcon />
-                    </IconButton>
-                    <IconButton
-                      edge="end"
-                      color="error"
-                      onClick={() => handleDelete(meeting.id)}
-                    >
-                      <DeleteIcon />
-                    </IconButton>
-                  </ListItemSecondaryAction>
                 </ListItem>
               ))}
             </List>
@@ -255,38 +263,50 @@ function MeetingPage() {
               }
               sx={{ mb: 2 }}
             />
-            <TextField
-              fullWidth
-              select
-              label="Customer"
-              value={formData.customerId}
-              onChange={(e) =>
-                setFormData({ ...formData, customerId: e.target.value })
+            <Autocomplete
+              multiple
+              options={customers}
+              getOptionLabel={(option) => option.name}
+              value={selectedCustomers}
+              onChange={(event, newValue) => {
+                setSelectedCustomers(newValue);
+                setFormData({ ...formData, customerId: newValue });
+              }}
+              renderInput={(params) => (
+                <TextField {...params} label="Customers" sx={{ mb: 2 }} />
+              )}
+              renderTags={(value, getTagProps) =>
+                value.map((option, index) => (
+                  <Chip
+                    variant="outlined"
+                    label={option.name}
+                    {...getTagProps({ index })}
+                  />
+                ))
               }
-              sx={{ mb: 2 }}
-            >
-              {customers.map((customer) => (
-                <MenuItem key={customer.id} value={customer.id}>
-                  {customer.name}
-                </MenuItem>
-              ))}
-            </TextField>
-            <TextField
-              fullWidth
-              select
-              label="Staff"
-              value={formData.userId}
-              onChange={(e) =>
-                setFormData({ ...formData, userId: e.target.value })
+            />
+            <Autocomplete
+              multiple
+              options={users}
+              getOptionLabel={(option) => option.name}
+              value={selectedUsers}
+              onChange={(event, newValue) => {
+                setSelectedUsers(newValue);
+                setFormData({ ...formData, userId: newValue });
+              }}
+              renderInput={(params) => (
+                <TextField {...params} label="Staff" sx={{ mb: 2 }} />
+              )}
+              renderTags={(value, getTagProps) =>
+                value.map((option, index) => (
+                  <Chip
+                    variant="outlined"
+                    label={option.name}
+                    {...getTagProps({ index })}
+                  />
+                ))
               }
-              sx={{ mb: 2 }}
-            >
-              {users.map((member) => (
-                <MenuItem key={member.uid} value={member.uid}>
-                  {member.name}
-                </MenuItem>
-              ))}
-            </TextField>
+            />
             <LocalizationProvider dateAdapter={AdapterDateFns}>
               <DatePicker
                 label="Date"

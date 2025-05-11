@@ -24,6 +24,12 @@ userRoute.get(
   userInfoController.getUser
 );
 
+userRoute.get(
+  "/users/role/:role",
+  // verifyToken,
+  userInfoController.getUsersByRole
+);
+
 userRoute.put(
   "/users/:uid",
   // verifyToken,
