@@ -29,40 +29,22 @@ import {
 } from "@mui/icons-material";
 import axios from "axios";
 
-interface Meeting {
-  id: string;
-  title: string;
-  customerId: string;
-  staffId: string;
-  date: Date;
-  startTime: Date;
-  endTime: Date;
-  status: "scheduled" | "completed" | "cancelled";
-  notes?: string;
-}
-
-interface Customer {
-  id: string;
-  name: string;
-}
-
-interface Staff {
-  id: string;
-  name: string;
-}
+import { Meeting } from "../../models/meeting/meeting";
+import { User } from "../../models/user/user";
+import { Customer } from "../../models/customer/customer";
 
 var baseUrl = "http://localhost:3300";
 
 function MeetingPage() {
   const [meetings, setMeetings] = useState<Meeting[]>([]);
   const [customers, setCustomers] = useState<Customer[]>([]);
-  const [staff, setStaff] = useState<Staff[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
   const [openDialog, setOpenDialog] = useState(false);
   const [selectedMeeting, setSelectedMeeting] = useState<Meeting | null>(null);
   const [formData, setFormData] = useState({
     title: "",
     customerId: "",
-    staffId: "",
+    userId: "",
     date: new Date(),
     startTime: new Date(),
     endTime: new Date(),
@@ -97,7 +79,7 @@ function MeetingPage() {
   const fetchStaff = async () => {
     try {
       const response = await axios.get(`${baseUrl}/api/v1/users`);
-      setStaff(response.data);
+      setUsers(response.data);
     } catch (error) {
       console.error("Error fetching staff:", error);
     }
@@ -109,7 +91,7 @@ function MeetingPage() {
       setFormData({
         title: meeting.title,
         customerId: meeting.customerId,
-        staffId: meeting.staffId,
+        userId: meeting.userId,
         date: new Date(meeting.date),
         startTime: new Date(meeting.startTime),
         endTime: new Date(meeting.endTime),
@@ -121,7 +103,7 @@ function MeetingPage() {
       setFormData({
         title: "",
         customerId: "",
-        staffId: "",
+        userId: "",
         date: new Date(),
         startTime: new Date(),
         endTime: new Date(),
@@ -218,7 +200,7 @@ function MeetingPage() {
                             ?.name || "N/A"}
                           {" | "}
                           Staff:{" "}
-                          {staff.find((s) => s.id === meeting.staffId)?.name ||
+                          {users.find((u) => u.uid === meeting.userId)?.name ||
                             "N/A"}
                         </Typography>
                       </>
@@ -293,14 +275,14 @@ function MeetingPage() {
               fullWidth
               select
               label="Staff"
-              value={formData.staffId}
+              value={formData.userId}
               onChange={(e) =>
-                setFormData({ ...formData, staffId: e.target.value })
+                setFormData({ ...formData, userId: e.target.value })
               }
               sx={{ mb: 2 }}
             >
-              {staff.map((member) => (
-                <MenuItem key={member.id} value={member.id}>
+              {users.map((member) => (
+                <MenuItem key={member.uid} value={member.uid}>
                   {member.name}
                 </MenuItem>
               ))}
