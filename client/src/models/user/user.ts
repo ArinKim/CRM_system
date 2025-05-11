@@ -1,7 +1,7 @@
 import { UserInterface } from "./user.interface";
 
 export class User {
-  public username: string;
+  public name: string;
   public uid: string; //mandatory property
   public email: string; //mandatory property
   public role: string = "staff"; //optional parameter with default value
@@ -10,7 +10,7 @@ export class User {
 
   constructor(initializer?: any) {
     if (!initializer) return;
-    if (initializer.username) this.username = initializer.username;
+    if (initializer.name) this.name = initializer.name;
     if (initializer.uid) this.uid = initializer.uid;
     if (initializer.email) this.email = initializer.email;
     if (initializer.role) this.role = initializer.role;
@@ -19,13 +19,13 @@ export class User {
   }
 
   public toString(): string {
-    return `User: ${this.username} ${this.email} ${this.role} ${this.country}`;
+    return `User: ${this.name} ${this.email} ${this.role} ${this.country}`;
   }
 
   public toJson(): UserInterface {
     return {
       uid: this.uid,
-      username: this.username,
+      name: this.name,
       role: this.role,
       email: this.email,
       country: this.country,

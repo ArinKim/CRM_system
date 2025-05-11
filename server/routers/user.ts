@@ -1,7 +1,7 @@
 import express from "express";
 import verifyToken from "../middleware/auth";
 const firebaseAuthController = require("../controllers/firebase-auth");
-const userInfoController = require("../controllers/user-info");
+const userInfoController = require("../controllers/user");
 
 const userRoute = express.Router();
 

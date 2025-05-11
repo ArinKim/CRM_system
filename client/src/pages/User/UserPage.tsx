@@ -35,7 +35,7 @@ function UserPage() {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [formData, setFormData] = useState({
     email: "",
-    username: "",
+    name: "",
     role: "",
   });
 
@@ -57,12 +57,12 @@ function UserPage() {
       setSelectedUser(user);
       setFormData({
         email: user.email,
-        username: user.username || "",
+        name: user.name || "",
         role: user.role || "",
       });
     } else {
       setSelectedUser(null);
-      setFormData({ email: "", username: "", role: "" });
+      setFormData({ email: "", name: "", role: "" });
     }
     setOpenDialog(true);
   };
@@ -70,7 +70,7 @@ function UserPage() {
   const handleCloseDialog = () => {
     setOpenDialog(false);
     setSelectedUser(null);
-    setFormData({ email: "", username: "", role: "" });
+    setFormData({ email: "", name: "", role: "" });
   };
 
   const handleSubmit = async () => {
@@ -130,7 +130,7 @@ function UserPage() {
           <TableBody>
             {users.map((user) => (
               <TableRow key={user.uid}>
-                <TableCell>{user.username || "N/A"}</TableCell>
+                <TableCell>{user.name || "N/A"}</TableCell>
                 <TableCell>{user.email}</TableCell>
                 <TableCell>
                   <Chip
@@ -184,10 +184,10 @@ function UserPage() {
             />
             <TextField
               fullWidth
-              label="Username"
-              value={formData.username}
+              label="Name"
+              value={formData.name}
               onChange={(e) =>
-                setFormData({ ...formData, username: e.target.value })
+                setFormData({ ...formData, name: e.target.value })
               }
               sx={{ mb: 2 }}
             />
