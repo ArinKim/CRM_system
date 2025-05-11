@@ -115,10 +115,27 @@ class userInfoController {
       await db.collection("users").doc(currentUser.uid).set(newUser.toJson());
       return res.status(200).json({ message: "User updated successfully" });
     } catch (error) {
-      console.log(error);
-      return res
-        .status(500)
-        .json({ general: "Something went wrong, please try again :)" });
+      console.error("Error updating user details:", error);
+
+      // Handle specific Firestore errors
+      if (error.code === "permission-denied") {
+        return res.status(403).json({
+          error: "Permission denied to access users collection",
+        });
+      }
+
+      if (error.code === "invalid-argument") {
+        return res.status(400).json({
+          error: "Invalid role parameter",
+        });
+      }
+
+      // Handle any other unexpected errors
+      return res.status(500).json({
+        error: "Internal server error while fetching users",
+        details:
+          process.env.NODE_ENV === "development" ? error.message : undefined,
+      });
     }
   }
 

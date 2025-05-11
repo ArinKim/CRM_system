@@ -13,65 +13,159 @@ const db = getFirestore();
 class CustomerInfoController {
   async getAllCustomer(req, res, next) {
     try {
-      const usersRef = db.collection("customers");
+      const customersRef = db.collection("customers");
+      const snapshot = await customersRef.get();
 
-      usersRef.get().then((snapshot) => {
-        const data = snapshot.docs.map((doc) => ({
-          id: doc.uid,
-          ...doc.data(),
-        }));
-        // console.log(data);
-        return res.status(200).json(data);
-      });
+      if (snapshot.empty) {
+        return res.status(404).json({
+          error: "No customers found",
+          data: [],
+        });
+      }
+
+      const data = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      return res.status(200).json(data);
     } catch (error) {
-      return res
-        .status(500)
-        .json({ general: "Something went wrong, please try again" });
+      console.error("Error fetching customers:", error);
+
+      if (error.code === "permission-denied") {
+        return res.status(403).json({
+          error: "Permission denied to access customers collection",
+        });
+      }
+
+      return res.status(500).json({
+        error: "Internal server error while fetching customers",
+        details:
+          process.env.NODE_ENV === "development" ? error.message : undefined,
+      });
     }
   }
 
   async getCustomer(req, res, next) {
-    return res.status(200).json({ message: "Get Customer" });
+    try {
+      const { id } = req.params;
+
+      if (!id) {
+        return res.status(400).json({
+          error: "Customer ID is required",
+        });
+      }
+
+      const customerRef = db.collection("customers").doc(id);
+      const doc = await customerRef.get();
+
+      if (!doc.exists) {
+        return res.status(404).json({
+          error: `Customer with ID ${id} not found`,
+        });
+      }
+
+      return res.status(200).json(doc.data());
+    } catch (error) {
+      console.error("Error fetching customer:", error);
+
+      if (error.code === "permission-denied") {
+        return res.status(403).json({
+          error: "Permission denied to access customer",
+        });
+      }
+
+      return res.status(500).json({
+        error: "Internal server error while fetching customer",
+        details:
+          process.env.NODE_ENV === "development" ? error.message : undefined,
+      });
+    }
   }
 
   async createCustomer(req, res, next) {
     try {
-      // const { customer } = req.body;
-      const id = uuidv4();
+      if (!req.body || Object.keys(req.body).length === 0) {
+        return res.status(400).json({
+          error: "Customer data is required",
+        });
+      }
 
+      const id = uuidv4();
       const data = new Customer({
         id: id,
         ...req.body,
       }).toJson();
 
-      // console.log(req.body);
-
       await db.collection("customers").doc(id).set(data);
-      return res
-        .status(200)
-        .json({ message: "Create customer Customer", id: id });
+      return res.status(201).json({
+        message: "Customer created successfully",
+        id: id,
+      });
     } catch (error) {
-      console.error("Error creating customer Customer:", error);
-      return res.status(500).json(error);
+      console.error("Error creating customer:", error);
+
+      if (error.code === "permission-denied") {
+        return res.status(403).json({
+          error: "Permission denied to create customer",
+        });
+      }
+
+      return res.status(500).json({
+        error: "Internal server error while creating customer",
+        details:
+          process.env.NODE_ENV === "development" ? error.message : undefined,
+      });
     }
   }
 
   async updateCustomer(req, res, next) {
     try {
       const { id } = req.params;
-      // const { data } = req.body;
-      // console.log(id, req);
+
+      if (!id) {
+        return res.status(400).json({
+          error: "Customer ID is required",
+        });
+      }
+
+      if (!req.body || Object.keys(req.body).length === 0) {
+        return res.status(400).json({
+          error: "Update data is required",
+        });
+      }
+
+      const customerRef = db.collection("customers").doc(id);
+      const doc = await customerRef.get();
+
+      if (!doc.exists) {
+        return res.status(404).json({
+          error: `Customer with ID ${id} not found`,
+        });
+      }
+
       const data = new Customer({
         id: id,
         ...req.body,
       }).toJson();
-      // console.log(data);
 
-      await db.collection("customers").doc(id).update(data);
-      return res.status(200).json({ message: "Update Customer" });
+      await customerRef.update(data);
+      return res.status(200).json({
+        message: "Customer updated successfully",
+      });
     } catch (error) {
-      console.error("Error updating customer Customer:", error);
-      return res.status(500).json(error);
+      console.error("Error updating customer:", error);
+
+      if (error.code === "permission-denied") {
+        return res.status(403).json({
+          error: "Permission denied to update customer",
+        });
+      }
+
+      return res.status(500).json({
+        error: "Internal server error while updating customer",
+        details:
+          process.env.NODE_ENV === "development" ? error.message : undefined,
+      });
     }
   }
 
@@ -82,7 +176,18 @@ class CustomerInfoController {
       return res.status(200).json({ message: "Customer deleted successfully" });
     } catch (error) {
       console.error("Error deleting customer:", error);
-      return res.status(500).json(error);
+
+      if (error.code === "permission-denied") {
+        return res.status(403).json({
+          error: "Permission denied to delete customer",
+        });
+      }
+
+      return res.status(500).json({
+        error: "Internal server error while deleting customer",
+        details:
+          process.env.NODE_ENV === "development" ? error.message : undefined,
+      });
     }
   }
 }

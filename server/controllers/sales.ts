@@ -16,76 +16,199 @@ class SalesInfoController {
   async getAllSales(req, res, next) {
     try {
       const salesRef = db.collection("sales");
+      const snapshot = await salesRef.get();
 
-      salesRef.get().then((snapshot) => {
-        const data = snapshot.docs.map((doc) => ({
-          id: doc.id,
-          ...doc.data(),
-        }));
-        return res.status(200).json(data);
-      });
+      if (snapshot.empty) {
+        return res.status(404).json({
+          error: "No sales records found",
+          data: [],
+        });
+      }
+
+      const data = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      return res.status(200).json(data);
     } catch (error) {
-      return res.status(500).json(error);
+      console.error("Error fetching sales:", error);
+
+      if (error.code === "permission-denied") {
+        return res.status(403).json({
+          error: "Permission denied to access sales collection",
+        });
+      }
+
+      return res.status(500).json({
+        error: "Internal server error while fetching sales",
+        details:
+          process.env.NODE_ENV === "development" ? error.message : undefined,
+      });
     }
   }
 
   async getSales(req, res, next) {
     try {
-      const salesRef = db.collection("sales").doc(req.params.id);
-      const doc = await salesRef.get();
-      if (!doc.exists) {
-        console.log("No such document!");
-      } else {
-        console.log("Document data:", doc.data());
+      const { id } = req.params;
+      if (!id) {
+        return res.status(400).json({
+          error: "Sales ID is required",
+        });
       }
+
+      const salesRef = db.collection("sales").doc(id);
+      const doc = await salesRef.get();
+
+      if (!doc.exists) {
+        return res.status(404).json({
+          error: `Sales record with ID ${id} not found`,
+        });
+      }
+
       return res.status(200).json(doc.data());
     } catch (error) {
-      return res.status(500).json(error);
+      console.error("Error fetching sales record:", error);
+
+      if (error.code === "permission-denied") {
+        return res.status(403).json({
+          error: "Permission denied to access sales collection",
+        });
+      }
+
+      return res.status(500).json({
+        error: "Internal server error while fetching sales record",
+        details:
+          process.env.NODE_ENV === "development" ? error.message : undefined,
+      });
     }
   }
 
   async createSales(req, res, next) {
     try {
       const { customer, value } = req.body;
-      const id = uuidv4();
 
+      if (!customer || !value) {
+        return res.status(400).json({
+          error: "Customer and value are required",
+        });
+      }
+
+      const id = uuidv4();
       const sales = new Sales({
         id: id,
         customer: new Customer({
           id: id,
           ...customer,
-        }), // Ensure 'customer' is provided in the request body
+        }),
         value: value,
       }).toJson();
 
       await db.collection("sales").doc(id).set(sales);
-      return res.status(200).json({ message: "Create sales", id: id });
+      return res.status(201).json({
+        message: "Sales record created successfully",
+        id: id,
+      });
     } catch (error) {
-      return res.status(500).json(error);
+      console.error("Error creating sales record:", error);
+
+      if (error.code === "permission-denied") {
+        return res.status(403).json({
+          error: "Permission denied to create sales record",
+        });
+      }
+
+      return res.status(500).json({
+        error: "Internal server error while creating sales record",
+        details:
+          process.env.NODE_ENV === "development" ? error.message : undefined,
+      });
     }
   }
 
   async updateSales(req, res, next) {
     try {
       const { customer, value } = req.body;
-      const id = req.params.id;
+      const { id } = req.params;
+
+      if (!id) {
+        return res.status(400).json({
+          error: "Sales ID is required",
+        });
+      }
+
+      const salesRef = db.collection("sales").doc(id);
+      const doc = await salesRef.get();
+
+      if (!doc.exists) {
+        return res.status(404).json({
+          error: `Sales record with ID ${id} not found`,
+        });
+      }
 
       const sales = new Sales({
         id: id,
         value: value,
       }).toJson();
 
-      console.log(sales);
-      await db.collection("sales").doc(id).set(sales, { merge: true });
-      return res.status(200).json({ message: "Update sales" });
+      await salesRef.set(sales, { merge: true });
+      return res.status(200).json({
+        message: "Sales record updated successfully",
+      });
     } catch (error) {
-      console.log(error);
-      return res.status(500).json(error);
+      console.error("Error updating sales record:", error);
+
+      if (error.code === "permission-denied") {
+        return res.status(403).json({
+          error: "Permission denied to update sales record",
+        });
+      }
+
+      return res.status(500).json({
+        error: "Internal server error while updating sales record",
+        details:
+          process.env.NODE_ENV === "development" ? error.message : undefined,
+      });
     }
   }
 
   async deleteSales(req, res, next) {
-    return res.status(200).json({ message: "Delete sales" });
+    try {
+      const { id } = req.params;
+
+      if (!id) {
+        return res.status(400).json({
+          error: "Sales ID is required",
+        });
+      }
+
+      const salesRef = db.collection("sales").doc(id);
+      const doc = await salesRef.get();
+
+      if (!doc.exists) {
+        return res.status(404).json({
+          error: `Sales record with ID ${id} not found`,
+        });
+      }
+
+      await salesRef.delete();
+      return res.status(200).json({
+        message: "Sales record deleted successfully",
+      });
+    } catch (error) {
+      console.error("Error deleting sales record:", error);
+
+      if (error.code === "permission-denied") {
+        return res.status(403).json({
+          error: "Permission denied to delete sales record",
+        });
+      }
+
+      return res.status(500).json({
+        error: "Internal server error while deleting sales record",
+        details:
+          process.env.NODE_ENV === "development" ? error.message : undefined,
+      });
+    }
   }
 }
 
