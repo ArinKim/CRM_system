@@ -1,5 +1,5 @@
 import { CustomerInterface } from "../customer/customer.interface";
-import { Customer } from "../customer/customers";
+import { Customer } from "../customer/customer";
 import { SalesInterface } from "./sales.interface";
 
 export class Sales {
